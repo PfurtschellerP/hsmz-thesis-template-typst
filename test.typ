@@ -1,6 +1,17 @@
 #import "lib.typ": *
 
 
+#let appendix-content = [
+  = Anhang
+
+  Dies ist der Anhang.
+
+  #pagebreak()
+
+  = Zweiter Anhang
+]
+
+
 #show: hsmz-thesis.with(
   thesis-type: "Master's Thesis",
   title: "Typst Template",
@@ -9,11 +20,12 @@
   submission-date: "01.01.2026",
   confidentiality-period: "01.01.2036",
   ai-declaration-option: 1,
-  language: "en",
+  language: "de",
   acronyms: (
     "IT": "Information Technology",
   ),
   literature-file: "./literature.bib",
+  appendix: appendix-content,
   author: (
     name: "Max Musterman",
     matriculation-number: "12345",

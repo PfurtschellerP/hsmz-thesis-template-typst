@@ -9,6 +9,7 @@
   language,
   acronyms,
   literature-file,
+  appendix,
   author,
   company,
   supervisor,
@@ -72,6 +73,11 @@
   // check literature file
   if (literature-file == none or literature-file == "") {
     panic("Literature file is missing")
+  }
+
+  // check appendix
+  if (appendix != none and type(appendix) != content) {
+    panic("Appendix must be a content or none")
   }
 
   // check author

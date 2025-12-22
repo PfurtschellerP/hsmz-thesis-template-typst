@@ -45,3 +45,8 @@
   "de": "Eingereicht am",
   "en": "Submitted on",
 )
+
+#let LIST_OF_APPENDICES = (
+  "de": "Anhangverzeichnis",
+  "en": "List of Appendices",
+)

@@ -3,7 +3,7 @@
 
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
-#import "locale.typ": LIST_OF_ABBREVIATIONS, LIST_OF_FIGURES, LIST_OF_TABLES
+#import "locale.typ": LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES
 #import "check-attributes.typ": *
 
 // outlined outline for figures, tables, etc. that itself is outlined in the table of contents
@@ -25,6 +25,7 @@
   language: none,
   acronyms: none,
   literature-file: none,
+  appendix: none,
   // people
   author: (:),
   company: none,
@@ -46,6 +47,7 @@
     language,
     acronyms,
     literature-file,
+    appendix,
     author,
     company,
     supervisor,
@@ -195,9 +197,20 @@
     full: show-full-bibliography,
   )
 
-  pagebreak()
+  // If appendix is provided, show it here
+  if appendix != none {
+    pagebreak()
 
-  [
-    = Hello
-  ]
+    outlined-outline(
+      title: [#LIST_OF_APPENDICES.at(language)],
+      target: heading.where(supplement: [Appendix]),
+    )
+
+    pagebreak()
+
+    set heading(numbering: "A", supplement: [Appendix])
+    counter(heading).update(0)
+
+    appendix
+  }
 }
