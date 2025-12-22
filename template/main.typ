@@ -6,7 +6,7 @@
 
   Dies ist der Anhang.
 
-  pagebreak()
+  #pagebreak()
 ]
 
 
@@ -22,13 +22,13 @@
   acronyms: (
     "IT": "Information Technology",
   ),
-  literature-file: "./literature.bib",
+  bibliography: bibliography("./literature.bib"),
   appendix: appendix-content,
   author: (
     name: "Max Musterman",
     matriculation-number: "12345",
     address: (street: "Musterstraße 1", zip: "12345", city: "Musterstadt"),
-    signature-file: "./sample-signature.png",
+    signature-image: image("./assets/sample-signature.png"),
   ),
   company: "Musterfirma",
   supervisor: "Prof. Dr. Muster",

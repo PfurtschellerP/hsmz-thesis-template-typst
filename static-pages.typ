@@ -163,7 +163,10 @@
         align: bottom,
       ),
       table.cell(
-        image(author.signature-file, height: 1.5cm),
+        [
+          #set image(height: 1.5cm)
+          #author.signature-image
+        ],
         align: bottom,
       ),
       "Ort, Datum",

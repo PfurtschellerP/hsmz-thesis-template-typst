@@ -8,7 +8,7 @@
   ai-declaration-option,
   language,
   acronyms,
-  literature-file,
+  bibliography,
   appendix,
   author,
   company,
@@ -71,7 +71,7 @@
   }
 
   // check literature file
-  if (literature-file == none or literature-file == "") {
+  if (bibliography == none or bibliography == "") {
     panic("Literature file is missing")
   }
 

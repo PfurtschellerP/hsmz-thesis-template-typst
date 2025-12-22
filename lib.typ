@@ -12,6 +12,9 @@
   outline(..args)
 }
 
+// workaround for the lack of a std scope so that we can pass a bibliography object around from the template to here
+#let std-bibliography = bibliography
+
 // main entrypoint for this template
 #let hsmz-thesis(
   // thesis data
@@ -24,7 +27,7 @@
   ai-declaration-option: none,
   language: none,
   acronyms: none,
-  literature-file: none,
+  bibliography: none,
   appendix: none,
   // people
   author: (:),
@@ -46,7 +49,7 @@
     ai-declaration-option,
     language,
     acronyms,
-    literature-file,
+    bibliography,
     appendix,
     author,
     company,
@@ -191,11 +194,11 @@
     #counter(heading).update(counter(heading).at(<list-of-abbreviations>).first() + 1)
   ]
 
-  bibliography(
-    literature-file,
+  set std-bibliography(
     style: citation-style,
     full: show-full-bibliography,
   )
+  bibliography
 
   // If appendix is provided, show it here
   if appendix != none {
