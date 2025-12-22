@@ -30,7 +30,7 @@
 }
 
 #let title-page(
-  type,
+  thesis-type,
   title,
   faculty,
   degree-program,
@@ -51,7 +51,7 @@
 
     #set text(size: 14pt)
 
-    #text([#type\ ], size: 16pt, weight: 600)
+    #text([#thesis-type\ ], size: 16pt, weight: 600)
     #DEGREE_PROGRAM.at(language) #degree-program
 
     #text(

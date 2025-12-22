@@ -1,9 +1,10 @@
 // External package imports
 #import "@preview/acrostiche:0.6.0": acr, acrf, acrfpl, acrpl, init-acronyms, print-index // Acronyms - https://typst.app/universe/package/acrostiche/
 
-// static pages and locale
+// static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": LIST_OF_ABBREVIATIONS, LIST_OF_FIGURES, LIST_OF_TABLES
+#import "check-attributes.typ": *
 
 // outlined outline for figures, tables, etc. that itself is outlined in the table of contents
 #let outlined-outline(..args) = {
@@ -14,33 +15,45 @@
 // main entrypoint for this template
 #let hsmz-thesis(
   // thesis data
-  type: "Master's Thesis",
-  title: "Typst Template",
-  faculty: "Economics",
-  degree-program: "IT-Management",
-  submission-date: "01.01.2026",
-  confidentiality-period: "01.01.2036",
-  ai-declaration-option: 1,
-  language: "de",
-  acronyms: (
-    "IT": "Information Technology",
-  ),
-  literature-file: "./literature.bib",
+  thesis-type: none,
+  title: none,
+  faculty: none,
+  degree-program: none,
+  submission-date: none,
+  confidentiality-period: none,
+  ai-declaration-option: none,
+  language: none,
+  acronyms: none,
+  literature-file: none,
   // people
-  author: (
-    name: "Max Musterman",
-    matriculation-number: "12345",
-    address: (street: "Musterstraße 1", zip: "12345", city: "Musterstadt"),
-    signature-file: "./sample-signature.png",
-  ),
-  company: "Musterfirma",
-  supervisor: "Prof. Dr. Muster",
+  author: (:),
+  company: none,
+  supervisor: none,
   // settings
   citation-style: "apa",
   print-only-used-acronyms: true,
   show-full-bibliography: false,
   body,
 ) = {
+  check-attributes(
+    thesis-type,
+    title,
+    faculty,
+    degree-program,
+    submission-date,
+    confidentiality-period,
+    ai-declaration-option,
+    language,
+    acronyms,
+    literature-file,
+    author,
+    company,
+    supervisor,
+    citation-style,
+    print-only-used-acronyms,
+    show-full-bibliography,
+  )
+
   // global page and text settings
   set text(
     font: "Calibri",
@@ -64,7 +77,7 @@
   restriction-notice(title, company, confidentiality-period)
 
   title-page(
-    type,
+    thesis-type,
     title,
     faculty,
     degree-program,
