@@ -1,0 +1,12 @@
+[package]
+name = "hsmz-thesis"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Patrick Pfurtscheller <patrick@pfurtscheller.org>"]
+license = "MIT"
+description = "Unofficial Typst Template for thesis at Hochschule Mainz (HSMZ)"
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"

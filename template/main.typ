@@ -1,4 +1,4 @@
-#import "lib.typ": *
+#import "@preview/hsmz-thesis:0.1.0": *
 
 
 #let appendix-content = [
@@ -6,9 +6,7 @@
 
   Dies ist der Anhang.
 
-  #pagebreak()
-
-  = Zweiter Anhang
+  pagebreak()
 ]
 
 
@@ -43,13 +41,11 @@
 
 = Einleitung
 
-lalalalalalal
+Eine Thesis zum Thema #acr("IT") and der Hochschule Mainz.
 
 == Forschungsfrage
 
-#acr("IT")
-
-Forschungsmethoden von @wildeForschungsmethodenWirtschaftsinformatikEmpirische2007.
+Forschungsmethodik nach @wildeForschungsmethodenWirtschaftsinformatikEmpirische2007.
 
 = Theorie
 
