@@ -1,5 +1,5 @@
 // External package imports
-#import "@preview/acrostiche:0.6.0": acr, acrf, acrfpl, acrpl, init-acronyms, print-index // Acronyms - https://typst.app/universe/package/acrostiche/
+#import "@preview/acrostiche:0.7.0": acr, acrf, acrfpl, acrpl, init-acronyms, print-index // Acronyms - https://typst.app/universe/package/acrostiche/
 
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
