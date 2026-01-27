@@ -1,12 +1,9 @@
 #import "@preview/hsmz-thesis:0.1.0": *
 
-
 #let appendix-content = [
   = Anhang
 
   Dies ist der Anhang.
-
-  #pagebreak()
 ]
 
 
@@ -45,7 +42,7 @@ Eine Thesis zum Thema #acr("IT") and der Hochschule Mainz.
 
 == Forschungsfrage
 
-Forschungsmethodik nach @wildeForschungsmethodenWirtschaftsinformatikEmpirische2007.
+Forschungsmethodik streng nach der Literatur @wildeForschungsmethodenWirtschaftsinformatikEmpirische2007.
 
 = Theorie
 
