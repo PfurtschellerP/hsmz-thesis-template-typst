@@ -5,6 +5,9 @@ entrypoint = "lib.typ"
 authors = ["Patrick Pfurtscheller <patrick@pfurtscheller.org>"]
 license = "MIT"
 description = "Unofficial Typst Template for thesis at Hochschule Mainz (HSMZ)"
+repository = "https://github.com/PfurtschellerP/hsmz-thesis-template-typst"
+keywords = ["thesis", "hsmz", "hochschule mainz"]
+categories = ["thesis"]
 
 [template]
 path = "template"
