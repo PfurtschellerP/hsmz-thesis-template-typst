@@ -54,14 +54,7 @@
     #text([#thesis-type\ ], size: 16pt, weight: 600)
     #DEGREE_PROGRAM.at(language) #degree-program
 
-    #text(
-      [
-        \
-      ],
-      size: 18pt,
-    )
-
-    #v(1cm)
+    #v(2cm)
 
     #text([#title], size: 16pt, weight: 600)
 
@@ -71,29 +64,32 @@
     University of Applied Sciences\
     #FACULTY_OF.at(language) #faculty
 
-    #v(2cm)
+    #v(2.5cm)
 
-    #text(
-      [
-        #show: set par(leading: 0.5em)
-        #table(
-          inset: 8pt,
-          columns: (4.4cm, 5cm),
-          stroke: none,
-          align: left,
-          [#SUBMITTED_BY.at(language):],
-          [
-            #author.name\
-            #author.address.street\
-            #author.address.zip, #author.address.city
-          ],
+    #block(inset: (left: 2.5cm, right: 2.5cm), [
+      #text(
+        [
+          #show: set par(leading: 0.5em)
+          #table(
+            inset: 8pt,
+            columns: (0.9fr, 1fr),
+            stroke: none,
+            align: (right, left),
+            [#SUBMITTED_BY.at(language):],
+            [
+              #author.name\
+              #author.address.street\
+              #author.address.zip, #author.address.city
+            ],
 
-          [#MATRICULATION_NUMBER.at(language):], author.matriculation-number,
-          [#SUBMITTED_TO.at(language):], supervisor,
-          [#SUBMITTED_ON.at(language):], submission-date,
-        )],
-      size: 11pt,
-    )
+            [#MATRICULATION_NUMBER.at(language):], author.matriculation-number,
+            [#SUBMITTED_TO.at(language):], supervisor,
+            [#SUBMITTED_ON.at(language):], submission-date,
+          )],
+        size: 11pt,
+      )
+    ])
+
   ])
   pagebreak()
 }
