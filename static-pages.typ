@@ -72,7 +72,7 @@
           #show: set par(leading: 0.5em)
           #table(
             inset: 8pt,
-            columns: (0.9fr, 1fr),
+            columns: (1fr, 1fr),
             stroke: none,
             align: (right, left),
             [#SUBMITTED_BY.at(language):],
