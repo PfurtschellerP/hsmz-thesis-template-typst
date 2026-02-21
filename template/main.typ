@@ -1,4 +1,5 @@
 #import "@preview/hsmz-thesis-unofficial:0.1.0": *
+#import "acronyms.typ": acronyms
 
 #let appendix-content = [
   = Anhang
@@ -16,9 +17,7 @@
   confidentiality-period: "01.01.2036",
   ai-declaration-option: 1,
   language: "de",
-  acronyms: (
-    "IT": "Information Technology",
-  ),
+  acronyms: acronyms,
   bibliography: bibliography("./literature.bib"),
   appendix: appendix-content,
   author: (
