@@ -26,6 +26,7 @@
   citation-style: "apa",
   print-only-used-acronyms: true,
   show-full-bibliography: false,
+  show-restriction-notice: true,
 )
 
 

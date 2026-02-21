@@ -104,7 +104,12 @@
   if type(print-only-used-acronyms) != bool {
     panic("print-only-used-acronyms must be a boolean value")
   }
+
   if type(show-full-bibliography) != bool {
     panic("show-full-bibliography must be a boolean value")
+  }
+
+  if type(show-restriction-notice) != bool {
+    panic("show-restriction-notice must be a boolean value")
   }
 }

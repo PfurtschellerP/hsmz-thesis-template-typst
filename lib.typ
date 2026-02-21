@@ -38,6 +38,7 @@
   citation-style: "apa",
   print-only-used-acronyms: true,
   show-full-bibliography: false,
+  show-restriction-notice: true,
   body,
 ) = {
   check-attributes(
@@ -80,7 +81,9 @@
   )
 
   // pre-text
-  restriction-notice(title, company, confidentiality-period)
+  if show-restriction-notice {
+    restriction-notice(title, company, confidentiality-period)
+  }
 
   title-page(
     thesis-type,
