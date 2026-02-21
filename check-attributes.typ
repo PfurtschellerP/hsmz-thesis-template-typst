@@ -90,6 +90,11 @@
     panic("Supervisor is missing")
   }
 
+  // check font
+  if (font == none or font == "") {
+    panic("Font is missing")
+  }
+
   // check citation style
   if (citation-style == none or citation-style == "") {
     panic("Citation style is missing")

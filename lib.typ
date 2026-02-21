@@ -34,6 +34,7 @@
   company: none,
   supervisor: none,
   // settings
+  font: "Calibri",
   citation-style: "apa",
   print-only-used-acronyms: true,
   show-full-bibliography: false,
@@ -61,7 +62,7 @@
 
   // global page and text settings
   set text(
-    font: "Calibri",
+    font: font,
     size: 11pt,
     lang: language,
   )
