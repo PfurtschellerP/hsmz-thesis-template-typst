@@ -14,7 +14,7 @@ jobs:
       - name: Run typstyle
         uses: typstyle-rs/typstyle-action@main
         with:
-          opts: "--line-width 120"
+          opts: "-i --line-width 120"
           
 
       - name: Check for formatting changes
