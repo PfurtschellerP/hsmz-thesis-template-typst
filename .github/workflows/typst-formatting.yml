@@ -1,15 +1,20 @@
 name: Typst Formatting
 
-on: 
-  [push, pull_request]
+on: [push, pull_request]
 
 jobs:
   typstyle:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
-      with:
-        ref: ${{ github.head_ref }}
-    - name: Run typstyle
-      uses: typstyle-rs/typstyle-action@main
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Run typstyle
+        uses: typstyle-rs/typstyle-action@main
+
+      - name: Check for formatting changes
+        run: |
+          git diff --exit-code || \
+          (echo "::error::Typst files are not properly formatted. Run 'typstyle' locally and commit the changes." && exit 1)
