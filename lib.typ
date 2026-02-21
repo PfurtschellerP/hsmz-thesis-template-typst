@@ -56,6 +56,7 @@
     author,
     company,
     supervisor,
+    font,
     citation-style,
     print-only-used-acronyms,
     show-full-bibliography,
