@@ -60,6 +60,7 @@
     citation-style,
     print-only-used-acronyms,
     show-full-bibliography,
+    show-restriction-notice,
   )
 
   // global page and text settings

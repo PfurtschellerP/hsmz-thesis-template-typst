@@ -17,6 +17,7 @@
   citation-style,
   print-only-used-acronyms,
   show-full-bibliography,
+  show-restriction-notice,
 ) = {
   // check thesis-type
   if (thesis-type == none or thesis-type == "") {
