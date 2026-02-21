@@ -30,7 +30,7 @@
 
 = Einleitung
 
-Eine Thesis zum Thema #acr("IT") and der Hochschule Mainz.
+Eine Thesis zum Thema #acr("IT") an der Hochschule Mainz.
 
 == Forschungsfrage
 
