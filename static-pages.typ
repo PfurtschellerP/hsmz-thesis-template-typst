@@ -45,7 +45,7 @@
     )
   ])
 
-  v(3cm)
+  v(2.5cm)
 
   align(center, [
 
@@ -64,7 +64,7 @@
     University of Applied Sciences\
     #FACULTY_OF.at(language) #faculty
 
-    #v(2.5cm)
+    #v(2cm)
 
     #block(inset: (left: 2.5cm, right: 2.5cm), [
       #text(
