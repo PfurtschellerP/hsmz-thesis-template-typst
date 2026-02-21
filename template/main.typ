@@ -1,4 +1,4 @@
-#import "@preview/hsmz-thesis-unofficial:0.1.0": *
+#import "@preview/hsmz-thesis-unofficial:0.2.0": *
 #import "acronyms.typ": acronyms
 #import "appendix.typ": appendix-content
 
