@@ -4,7 +4,7 @@
 
 #show: hsmz-thesis-unofficial.with(
   thesis-type: "Master's Thesis",
-  title: "Typst Template",
+  title: "Untersuchung der Auswirkungen von [Thema] auf [Bereich] unter besonderer Berücksichtigung von [Aspekt] in [Kontext]",
   faculty: "Wirtschaft",
   degree-program: "IT-Management",
   submission-date: "01.01.2026",
