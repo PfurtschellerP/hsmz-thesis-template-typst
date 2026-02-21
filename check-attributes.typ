@@ -19,7 +19,7 @@
 ) = {
   // check thesis-type
   if (thesis-type == none or thesis-type == "") {
-    panic("Thesis thesis-type is missing")
+    panic("Thesis type is missing")
   }
 
   // check title
@@ -77,7 +77,7 @@
 
   // check appendix
   if (appendix != none and type(appendix) != content) {
-    panic("Appendix must be a content or none")
+    panic("Appendix must be content or none")
   }
 
   // check author

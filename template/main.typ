@@ -22,7 +22,7 @@
   bibliography: bibliography("./literature.bib"),
   appendix: appendix-content,
   author: (
-    name: "Max Musterman",
+    name: "Max Mustermann",
     matriculation-number: "12345",
     address: (street: "Musterstraße 1", zip: "12345", city: "Musterstadt"),
     signature-image: image("./assets/sample-signature.png"),
@@ -38,7 +38,7 @@
 
 = Einleitung
 
-Eine Thesis zum Thema #acr("IT") and der Hochschule Mainz.
+Eine Thesis zum Thema #acr("IT") an der Hochschule Mainz.
 
 == Forschungsfrage
 
