@@ -21,7 +21,7 @@
   thesis-type: none,
   title: none,
   faculty: none,
-  degree-program: none,
+            degree-program: none,
   submission-date: none,
   confidentiality-period: none,
   ai-declaration-option: none,
