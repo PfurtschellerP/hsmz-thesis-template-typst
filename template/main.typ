@@ -1,12 +1,6 @@
 #import "@preview/hsmz-thesis-unofficial:0.1.0": *
 #import "acronyms.typ": acronyms
-
-#let appendix-content = [
-  = Anhang
-
-  Dies ist der Anhang.
-]
-
+#import "appendix.typ": appendix-content
 
 #show: hsmz-thesis-unofficial.with(
   thesis-type: "Master's Thesis",
@@ -32,7 +26,6 @@
   print-only-used-acronyms: true,
   show-full-bibliography: false,
 )
-
 
 
 = Einleitung
