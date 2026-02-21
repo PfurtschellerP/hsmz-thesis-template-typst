@@ -1,11 +1,6 @@
 #import "@preview/hsmz-thesis-unofficial:0.1.0": *
-
-#let appendix-content = [
-  = Anhang
-
-  Dies ist der Anhang.
-]
-
+#import "acronyms.typ": acronyms
+#import "appendix.typ": appendix-content
 
 #show: hsmz-thesis-unofficial.with(
   thesis-type: "Master's Thesis",
@@ -16,9 +11,7 @@
   confidentiality-period: "01.01.2036",
   ai-declaration-option: 1,
   language: "de",
-  acronyms: (
-    "IT": "Information Technology",
-  ),
+  acronyms: acronyms,
   bibliography: bibliography("./literature.bib"),
   appendix: appendix-content,
   author: (
@@ -35,10 +28,9 @@
 )
 
 
-
 = Einleitung
 
-Eine Thesis zum Thema #acr("IT") and der Hochschule Mainz.
+Eine Thesis zum Thema #acr("IT") an der Hochschule Mainz.
 
 == Forschungsfrage
 
