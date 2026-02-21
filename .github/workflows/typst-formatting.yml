@@ -1,0 +1,25 @@
+name: Typst Formatting
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  typstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Run typstyle
+        uses: typstyle-rs/typstyle-action@main
+        with:
+          opts: "-i --line-width 120"
+          
+
+      - name: Check for formatting changes
+        run: |
+          git diff --exit-code || \
+          (echo "::error::Typst files are not properly formatted. Run 'typstyle' locally and commit the changes." && exit 1)
