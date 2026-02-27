@@ -3,7 +3,9 @@
 
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
-#import "locale.typ": LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES
+#import "locale.typ": (
+  ABSTRACT, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES, MANAGEMENT_SUMMARY,
+)
 #import "check-attributes.typ": *
 
 // outlined outline for figures, tables, etc. that itself is outlined in the table of contents
@@ -29,6 +31,8 @@
   acronyms: none,
   bibliography: none,
   appendix: none,
+  management-summary: [],
+  abstract: [],
   // people
   author: (:),
   company: none,
@@ -39,6 +43,8 @@
   print-only-used-acronyms: true,
   show-full-bibliography: false,
   show-restriction-notice: true,
+  show-management-summary: false,
+  show-abstract: true,
   body,
 ) = {
   check-attributes(
@@ -61,6 +67,8 @@
     print-only-used-acronyms,
     show-full-bibliography,
     show-restriction-notice,
+    show-management-summary,
+    show-abstract,
   )
 
   // global page and text settings
@@ -107,6 +115,24 @@
     submission-date,
   )
 
+  // Styling of individual elements
+  // Margin for headings to make them more visually pleasing
+  show heading.where(level: 1): set block(below: 1em)
+  show heading.where(level: 2): set block(above: 1.5em, below: 1.5em)
+  show heading.where(level: 3): set block(above: 1.5em, below: 1.5em)
+
+  if show-management-summary {
+    heading(MANAGEMENT_SUMMARY.at(language), outlined: false, level: 1)
+    management-summary
+    pagebreak()
+  }
+
+  if show-abstract {
+    heading(ABSTRACT.at(language), outlined: false, level: 1)
+    abstract
+    pagebreak()
+  }
+
   // reset heading and page numbers for listings
   counter(heading).update(0)
   counter(page).update(0)
@@ -123,12 +149,6 @@
   set page(
     margin: (top: 2cm, bottom: 2cm, left: 4.5cm, right: 1.5cm),
   )
-
-  // Styling of individual elements
-  // Margin for headings to make them more visually pleasing
-  show heading.where(level: 1): set block(below: 1em)
-  show heading.where(level: 2): set block(above: 1.5em, below: 1.5em)
-  show heading.where(level: 3): set block(above: 1.5em, below: 1.5em)
 
   show table: set par(
     leading: 0.8em,
