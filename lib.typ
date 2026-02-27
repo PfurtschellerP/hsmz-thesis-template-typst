@@ -135,7 +135,7 @@
 
   // reset heading and page numbers for listings
   counter(heading).update(0)
-  counter(page).update(0)
+  counter(page).update(1)
 
   // adjust page numbering and headings for the listings
   set page(
