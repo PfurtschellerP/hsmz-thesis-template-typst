@@ -21,6 +21,10 @@ typst init @preview/hsmz-thesis-unofficial
 
 This project is open for collaboration. If you have suggestions, improvements, or would like to contribute, please feel free to open an issue or submit a pull request.
 
+## Other Projects
+
+This template is for Typst, but if you are looking for a LaTeX template for the Hochschule Mainz, you can use the [HSMZ-Thesis-Template by Jonas Bingel](https://github.com/jonasbingel/HSMZ-Thesis-Template).
+
 ## Terms of Use of the Hochschule Mainz Logo (German)
 
 This section is a copy of the [official terms of use for the logo of the Hochschule Mainz](https://www.hs-mainz.de/pressemedien/logo/). It is provided here for reference purposes only. Within this template, the logo is intended for use by students and doctoral candidates.
