@@ -187,7 +187,7 @@
       sorted: "up",
       row-gutter: 10pt,
     )
-    #text() <list-of-abbreviations> // set label for page number retrieval later
+    #text("") <list-of-abbreviations> // set label for page number retrieval later
   ]
 
   pagebreak()
