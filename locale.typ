@@ -50,3 +50,13 @@
   "de": "Anhangverzeichnis",
   "en": "List of Appendices",
 )
+
+#let ABSTRACT = (
+  "de": "Zusammenfassung",
+  "en": "Abstract",
+)
+
+#let MANAGEMENT_SUMMARY = (
+  "de": "Management Summary",
+  "en": "Management Summary",
+)

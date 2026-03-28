@@ -1,6 +1,7 @@
 #import "@preview/hsmz-thesis-unofficial:0.2.0": *
 #import "acronyms.typ": acronyms
 #import "appendix.typ": appendix-content
+#import "summary.typ": abstract, management-summary
 
 #show: hsmz-thesis-unofficial.with(
   thesis-type: "Master's Thesis",
@@ -14,6 +15,8 @@
   acronyms: acronyms,
   bibliography: bibliography("./literature.bib"),
   appendix: appendix-content,
+  management-summary: management-summary,
+  abstract: abstract,
   author: (
     name: "Max Mustermann",
     matriculation-number: "12345",
@@ -27,6 +30,8 @@
   print-only-used-acronyms: true,
   show-full-bibliography: false,
   show-restriction-notice: true,
+  show-management-summary: false,
+  show-abstract: true,
 )
 
 

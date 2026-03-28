@@ -18,6 +18,8 @@
   print-only-used-acronyms,
   show-full-bibliography,
   show-restriction-notice,
+  show-management-summary,
+  show-abstract,
 ) = {
   // check thesis-type
   if (thesis-type == none or thesis-type == "") {
@@ -113,5 +115,13 @@
 
   if type(show-restriction-notice) != bool {
     panic("show-restriction-notice must be a boolean value")
+  }
+
+  if type(show-management-summary) != bool {
+    panic("show-management-summary must be a boolean value")
+  }
+
+  if type(show-abstract) != bool {
+    panic("show-abstract must be a boolean value")
   }
 }
