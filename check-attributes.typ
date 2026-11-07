@@ -23,6 +23,7 @@
   show-restriction-notice: none,
   show-management-summary: none,
   show-abstract: none,
+  show-word-count: none,
 ) = {
   // check thesis-type
   if is-missing(thesis-type) {
@@ -133,6 +134,10 @@
 
   if type(show-abstract) != bool {
     panic("show-abstract must be a boolean value")
+  }
+
+  if type(show-word-count) != bool {
+    panic("show-word-count must be a boolean value")
   }
 
   // company and confidentiality period are only needed for the restriction notice

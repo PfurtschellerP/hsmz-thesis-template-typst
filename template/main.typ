@@ -32,6 +32,7 @@
   show-restriction-notice: true,
   show-management-summary: false,
   show-abstract: true,
+  show-word-count: true,
 )
 
 
