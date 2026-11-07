@@ -88,6 +88,22 @@
     panic("Author is missing or not a dictionary")
   }
 
+  for key in ("name", "matriculation-number", "address") {
+    if is-missing(author.at(key, default: none)) {
+      panic("Author attribute '" + key + "' is missing")
+    }
+  }
+
+  if type(author.address) != dictionary {
+    panic("Author address must be a dictionary with the keys 'street', 'zip' and 'city'")
+  }
+
+  for key in ("street", "zip", "city") {
+    if is-missing(author.address.at(key, default: none)) {
+      panic("Author address attribute '" + key + "' is missing")
+    }
+  }
+
   // check supervisor
   if is-missing(supervisor) {
     panic("Supervisor is missing")
