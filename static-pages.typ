@@ -94,6 +94,7 @@
   pagebreak()
 }
 
+// Eigenständigkeitserklärung – text according to the Leitfaden (April 2025), Section 3.3
 #let declaration-of-originality(
   option,
   author,
@@ -105,8 +106,9 @@
   [
     #text([Eigenständigkeitserklärung (Deutsch/German)], size: 18pt, weight: 600)
 
+    // compact layout so that the declaration fits on a single page
     #set text(size: 10pt)
-    #set par(leading: 0.7em)
+    #set par(leading: 0.65em, spacing: 1.2em)
 
     Hiermit versichere ich, #author.name, dass ich die anliegende Arbeit
 
@@ -115,47 +117,48 @@
       stroke: none,
       [*Titel der Arbeit*], [#underline(title)],
       [*Studienfach*], [#underline(degree-program)],
-      [*Prüfer:in*], [#underline(supervisor)],
+      [*Prüfer/in*], [#underline(supervisor)],
     )
 
     selbst angefertigt und alle für die Arbeit verwendeten Quellen und Hilfsmittel in der Arbeit vollständig angegeben
-    habe.
+    habe. Zudem versichere ich, dass ich weder diese noch inhaltlich verwandte Arbeiten als Prüfungsleistung in anderen
+    Fächern eingereicht habe oder einreichen werde.
 
-    *Ich versichere außerdem,*
+    Ich versichere außerdem, (eine der folgenden Optionen ist mit dem / der Prüfer:in abzustimmen!):
 
     #show: checklist
-    - [#if option == 1 [x] else [ ]] *Option 1* Erlaubnis von KI-Tools mit geringfügiger Dokumentation
-    _dass ich die Nutzung aller für die Erstellung dieser Arbeit erlaubten generativen KI-Tools im Anhang der
-    vorliegenden Arbeit durch die Benennung des Tools und seines Einsatzzwecks tabellarisch dokumentiert habe. Alle
-    wortwörtlich übernommenen oder paraphrasierten Inhalte von generativen KI-Tools wurden entsprechend gekennzeichnet.
-    Mir ist bewusst, dass der Versuch einer nicht-dokumentierten Nutzung generativer KI-Tools als Täuschungsversuch
-    entsprechend der Prüfungsordnung zu werten ist. Ich versichere, dass ich die mithilfe von KI-Tools generierten
-    Inhalte nicht unreflektiert übernommen habe und ich als Autor:in die Verantwortung für Angaben und Aussagen in
-    dieser Arbeit trage._
+    - [#if option == 1 [x] else [ ]] *Option 1: Erlaubnis von KI-Tools mit geringfügiger Dokumentation*\
+      dass ich die Nutzung aller für die Erstellung dieser Arbeit erlaubten generativen KI-Tools im Anhang der
+      vorliegenden Arbeit durch die Benennung des Tools und seines Einsatzzwecks tabellarisch dokumentiert habe. Alle
+      wortwörtlich übernommenen oder paraphrasierten Inhalte von generativen KI-Tools wurden entsprechend
+      gekennzeichnet. Mir ist bewusst, dass der Versuch einer nicht-dokumentierten Nutzung generativer KI-Tools als
+      Täuschungsversuch entsprechend der Prüfungsordnung zu werten ist. Ich versichere, dass ich die mithilfe von
+      KI-Tools generierten Inhalte nicht unreflektiert übernommen habe und ich als Autor:in die Verantwortung für
+      Angaben und Aussagen in dieser Arbeit trage.
 
-    - [#if option == 2 [x] else [ ]] *Option 2* Erlaubnis von KI-Tools mit umfangreicher Dokumentation
-    _dass ich die Nutzung aller für die Erstellung dieser Arbeit erlaubten generativen KI-Tools im Anhang der
-    vorliegenden Arbeit tabellarisch dokumentiert habe. Dazu gehört, welche generativen KI-Tools ich für welchen Zweck
-    verwendet habe und auf welche Ausschnitte der Arbeit sich diese Nutzung bezieht. Ich habe zudem alle, von dem / der
-    Prüfer:in angeforderten Quellen (Prompts & Outputs), die meinen Einsatz von generativer KI-Tools bei der Erstellung
-    dieser Arbeit nachweisen, nach bestem Wissen im Anhang der Arbeit zur Verfügung gestellt. Alle wortwörtlich
-    übernommenen oder paraphrasierten Inhalte von generativen KI-Tools wurden entsprechend gekennzeichnet. Mir ist
-    bewusst, dass der Versuch einer nicht-dokumentierten Nutzung generativer KI-Tools als Täuschungsversuch entsprechend
-    der Prüfungsordnung zu werten ist. Ich versichere, dass ich die mithilfe von KI-Tools generierten Inhalte nicht
-    unreflektiert übernommen habe und ich als Autor:in die Verantwortung für Angaben und Aussagen in dieser Arbeit
-    trage._
+    - [#if option == 2 [x] else [ ]] *Option 2: Erlaubnis von KI-Tools mit umfangreicher Dokumentation*\
+      dass ich die Nutzung aller für die Erstellung dieser Arbeit erlaubten generativen KI-Tools im Anhang der
+      vorliegenden Arbeit tabellarisch dokumentiert habe. Dazu gehört, welche generativen KI-Tools ich für welchen
+      Zweck verwendet habe und auf welche Ausschnitte der Arbeit sich diese Nutzung bezieht. Ich habe zudem alle, von
+      dem / der Prüfer:in angeforderten Quellen (Prompts & Outputs), die meinen Einsatz von generativer KI-Tools bei der
+      Erstellung dieser Arbeit nachweisen, nach bestem Wissen im Anhang der Arbeit zur Verfügung gestellt. Alle
+      wortwörtlich übernommenen oder paraphrasierten Inhalte von generativen KI-Tools wurden entsprechend
+      gekennzeichnet. Mir ist bewusst, dass der Versuch einer nicht-dokumentierten Nutzung generativer KI-Tools als
+      Täuschungsversuch entsprechend der Prüfungsordnung zu werten ist. Ich versichere, dass ich die mithilfe von
+      KI-Tools generierten Inhalte nicht unreflektiert übernommen habe und ich als Autor:in die Verantwortung für
+      Angaben und Aussagen in dieser Arbeit trage.
 
-    - [#if option == 3 [x] else [ ]] *Option 3* Verbot von KI-Tools
-    _dass ich *keine* auf Künstlicher Intelligenz (KI) basierenden Text- oder Bildgeneratoren (z.B. Chat-GPT) verwendet
-    habe, da der Einsatz dieser Tools bei der Erstellung dieser Arbeit mir durch den / die Prüfer:in explizit verboten
-    wurde. Mir ist bewusst, dass der Einsatz eines generativen KI-Tools eine Missachtung der Vorgabe ist und dies als
-    Täuschungsversuch entsprechend der Prüfungsordnung gewertet wird._
+    - [#if option == 3 [x] else [ ]] *Option 3: Verbot von KI-Tools*\
+      dass ich keine auf Künstlicher Intelligenz (KI) basierenden Text- oder Bildgeneratoren (z.B. ChatGPT) verwendet
+      habe, da der Einsatz dieser Tools bei der Erstellung dieser Arbeit mir durch den / die Prüfer:in explizit verboten
+      wurde. Mir ist bewusst, dass der Einsatz eines generativen KI-Tools eine Missachtung der Vorgabe ist und dies als
+      Täuschungsversuch entsprechend der Prüfungsordnung gewertet wird.
 
     #table(
       columns: (1fr, 1fr),
       stroke: none,
       table.cell(
-        underline([#author.address.zip #author.address.city, #submission-date]),
+        underline([#author.address.city, #submission-date]),
         align: bottom,
       ),
       table.cell(
