@@ -4,6 +4,7 @@
 // locale
 #import "locale.typ": DEGREE_PROGRAM, FACULTY_OF, MATRICULATION_NUMBER, SUBMITTED_BY, SUBMITTED_ON, SUBMITTED_TO
 
+// Sperrvermerk – text according to the "Leitfaden zur Anfertigung wissenschaftlicher Arbeiten" (April 2025), Section 3.1
 #let restriction-notice(
   title,
   company,
@@ -21,7 +22,7 @@
     Prüfungsorgane (einschließlich Beisitzer & Plagiatskontrolle) sowie den in einem eventuellen Rechtschutzverfahren
     Betrauten zugänglich gemacht werden.
 
-    Im Übrigen ist eine Veröffentlichung und Vervielfältigungen der Abschlussarbeit - auch in Auszügen - nicht
+    Im Übrigen ist eine Veröffentlichung und Vervielfältigungen der Abschlussarbeit – auch in Auszügen – nicht
     gestattet. Vorbehaltlich der Vorschriften zum Prüfungsverfahren und der Prüfung bedarf eine Einsichtnahme in die
     Arbeit durch Dritte einer ausdrücklichen Genehmigung der Verfasserin/des Verfassers sowie des o.a. Unternehmens/der
     o.a. Einrichtung. Diese Geheimhaltungsverpflichtung gilt bis zum Ablauf des #confidentiality-period.
