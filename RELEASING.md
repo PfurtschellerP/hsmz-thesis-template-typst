@@ -37,23 +37,38 @@ deleted, fork typst/packages again.
 
 ### Automatic submission (optional)
 
-The `typst-universe` job of the release workflow pushes the package to your fork and opens the pull request on
-typst/packages. It needs a token, because the default `GITHUB_TOKEN` of a workflow can't access other repositories.
+The `typst-universe` job of the release workflow pushes the package to your fork and, depending on the token, opens
+the pull request on typst/packages. It needs a token, because the default `GITHUB_TOKEN` of a workflow can't access
+other repositories. Choose one of the two token types:
 
-1. Create a **classic** personal access token at <https://github.com/settings/tokens> with the scopes `public_repo` and
-   `workflow` (`workflow` is needed to sync the fork when typst/packages changed its own workflows). Fine-grained
-   tokens don't work, because they can't open pull requests on repositories you don't own.
+| | Fine-grained token (recommended) | Classic token |
+| --- | --- | --- |
+| Access | Only your fork | All your repositories, **including private ones** (the `workflow` scope can't be combined with `public_repo` only) |
+| Pull request on typst/packages | You open it with one click on a prefilled link in the job summary | Opened automatically |
+
+GitHub doesn't allow fine-grained tokens to write to repositories of other users, and opening a pull request on
+typst/packages counts as such. Everything else (updating the fork and pushing the package) only needs the fork.
+
+1. Create the token:
+   - **Fine-grained:** <https://github.com/settings/personal-access-tokens/new>. Resource owner: your account. Repository
+     access: **Only select repositories** → your fork (`PfurtschellerP/packages`). Repository permissions:
+     **Contents: Read and write** (push the package) and **Workflows: Read and write** (update the fork when
+     typst/packages changed its own workflows); **Metadata: Read-only** is added automatically. No account permissions.
+   - **Classic:** <https://github.com/settings/tokens> with the scopes `public_repo` and `workflow`.
+
+   Set an expiration date (e.g. one year) and renew the token when it expires.
 2. In this repository, go to **Settings → Environments**, create an environment called `typst-universe` and add the
    token as the environment secret `TYPST_PACKAGES_TOKEN`.
 3. Recommended: enable **Required reviewers** for the environment and add yourself. The workflow then waits for your
-   approval before anything is submitted to typst/packages.
+   approval before anything is pushed to your fork or submitted to typst/packages.
 4. Only if your fork is not called `<owner>/packages`: add the repository variable `TYPST_PACKAGES_FORK`
    (e.g. `PfurtschellerP/typst-packages`) under **Settings → Secrets and variables → Actions → Variables**.
 
 Without the secret, the job is skipped with a notice and you submit the package manually (see below).
 
-The pull request is created by the owner of the token. The Typst team expects updates to come from the same person who
-submitted the previous versions; otherwise they will ask that person before merging.
+The pull request is created by the owner of the token (or by you, if you open it from the link). The Typst team expects
+updates to come from the same person who submitted the previous versions; otherwise they will ask that person before
+merging.
 
 ## Release process
 
@@ -116,10 +131,13 @@ If the token is configured, the `typst-universe` job runs after the release (aft
 required reviewers). It
 
 1. syncs your fork with typst/packages,
-2. creates the branch `hsmz-thesis-unofficial-X.Y.Z` with the folder `packages/preview/hsmz-thesis-unofficial/X.Y.Z/`,
-3. opens the pull request `hsmz-thesis-unofficial:X.Y.Z` on typst/packages.
+2. creates the branch `hsmz-thesis-unofficial-X.Y.Z` with the folder `packages/preview/hsmz-thesis-unofficial/X.Y.Z/`
+   and pushes it to your fork,
+3. opens the pull request `hsmz-thesis-unofficial:X.Y.Z` on typst/packages (classic token), or, with a fine-grained
+   token, ends with a warning and a link **Open pull request hsmz-thesis-unofficial:X.Y.Z** in the job summary. Open
+   the link, check the prefilled title and description and click **Create pull request**.
 
-Check the pull request it created, and continue with [step 5](#5-review-and-publication).
+Check the pull request, and continue with [step 5](#5-review-and-publication).
 
 #### Manual
 

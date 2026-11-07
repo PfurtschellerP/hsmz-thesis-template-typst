@@ -63,16 +63,18 @@ jobs:
             "sample-thesis-${{ steps.meta.outputs.version }}.pdf" \
             "${{ steps.meta.outputs.name }}-${{ steps.meta.outputs.version }}.zip"
 
-  # Opens the submission pull request on typst/packages from your fork. Only runs if the secret
-  # TYPST_PACKAGES_TOKEN is configured (see RELEASING.md). Uses the "typst-universe" environment, so you can require a
+  # Pushes the package to your fork of typst/packages and opens the submission pull request. Only runs if the secret
+  # TYPST_PACKAGES_TOKEN is configured (see RELEASING.md). With a fine-grained token (access to the fork only), the pull
+  # request can't be opened automatically; the job then links a prefilled pull request in its summary instead. Uses the "typst-universe" environment, so you can require a
   # manual approval before anything is submitted (Settings → Environments → typst-universe → Required reviewers).
   typst-universe:
-    name: Open PR on typst/packages
+    name: Submit to typst/packages
     needs: github-release
     runs-on: ubuntu-latest
     environment: typst-universe
     env:
       GH_TOKEN: ${{ secrets.TYPST_PACKAGES_TOKEN }}
+      RELEASE_TOKEN: ${{ github.token }}
       NAME: ${{ needs.github-release.outputs.name }}
       VERSION: ${{ needs.github-release.outputs.version }}
       # your fork of typst/packages; override with the repository variable TYPST_PACKAGES_FORK
@@ -135,12 +137,26 @@ jobs:
           git commit -m "$NAME:$VERSION"
           git push --force origin "$branch"
 
-          notes="$(gh release view "v$VERSION" -R "$GITHUB_REPOSITORY" --json body -q .body)"
+          # the release notes are read with the token of this workflow, the submission token only needs the fork
+          notes="$(GH_TOKEN="$RELEASE_TOKEN" gh release view "v$VERSION" -R "$GITHUB_REPOSITORY" --json body -q .body)"
+          title="$NAME:$VERSION"
           body="$(printf 'I am submitting\n- [ ] a new package\n- [x] an update for a package\n\nDescription: %s\n\nRelease: %s\n' \
             "$notes" "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v$VERSION")"
 
-          gh pr create -R typst/packages \
-            --base main \
-            --head "$fork_owner:$branch" \
-            --title "$NAME:$VERSION" \
-            --body "$body"
+          # classic tokens can open the pull request on typst/packages; fine-grained tokens can't (GitHub only allows
+          # them to write to repositories of their owner), so the job links a prefilled pull request instead
+          if gh pr create -R typst/packages --base main --head "$fork_owner:$branch" --title "$title" --body "$body"; then
+            exit 0
+          fi
+
+          uri() { jq -rn --arg value "$1" '$value | @uri'; }
+          url="https://github.com/typst/packages/compare/main...${fork_owner}:${FORK#*/}:${branch}?expand=1&title=$(uri "$title")&body=$(uri "$body")"
+          echo "::warning::The package was pushed to $FORK, but the pull request couldn't be opened with this token. Open it with the link in the job summary."
+          {
+            echo "## Open the pull request on typst/packages"
+            echo
+            echo "The package was pushed to the branch \`$branch\` of $FORK. To submit it, open the prefilled pull request,"
+            echo "check it and click **Create pull request**:"
+            echo
+            echo "**[Open pull request $title]($url)**"
+          } >> "$GITHUB_STEP_SUMMARY"
