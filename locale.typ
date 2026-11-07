@@ -72,6 +72,11 @@
 )
 
 // misc
+#let WORD_COUNT = (
+  "de": "Anzahl der Wörter im Textteil",
+  "en": "Word count of the main text",
+)
+
 #let NOTE = (
   "de": "Anmerkung",
   "en": "Note",

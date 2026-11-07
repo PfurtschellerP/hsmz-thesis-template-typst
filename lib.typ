@@ -1,11 +1,12 @@
 // External package imports
 #import "@preview/acrostiche:0.7.0": acr, acrf, acrfpl, acrpl, init-acronyms, print-index // Acronyms - https://typst.app/universe/package/acrostiche/
+#import "@preview/wordometer:0.1.6": word-count-of // Word count - https://typst.app/universe/package/wordometer/
 
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
   ABSTRACT, APPENDIX, BIBLIOGRAPHY, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES,
-  MANAGEMENT_SUMMARY, NOTE,
+  MANAGEMENT_SUMMARY, NOTE, WORD_COUNT,
 )
 #import "check-attributes.typ": check-attributes
 
@@ -49,6 +50,7 @@
   show-restriction-notice: true,
   show-management-summary: false,
   show-abstract: true,
+  show-word-count: true,
   body,
 ) = {
   check-attributes(
@@ -73,6 +75,7 @@
     show-restriction-notice: show-restriction-notice,
     show-management-summary: show-management-summary,
     show-abstract: show-abstract,
+    show-word-count: show-word-count,
   )
 
   // global page and text settings (Leitfaden, Section 2.4)
@@ -229,6 +232,13 @@
 
   // content
   body
+
+  // word count of the main text (Leitfaden, Section 2.3). Figures, tables and citations are not counted; any other
+  // content can be excluded by attaching the label <no-wc> to it.
+  if show-word-count {
+    let count = word-count-of(body, exclude: (figure, table, <no-wc>)).words
+    block(above: 2em, [#WORD_COUNT.at(language): #count])
+  }
 
   // post-text
 
