@@ -1,106 +1,105 @@
+// helper: true if a value is missing (none or an empty string)
+#let is-missing(value) = value == none or value == ""
+
 #let check-attributes(
-  thesis-type,
-  title,
-  faculty,
-  degree-program,
-  submission-date,
-  confidentiality-period,
-  ai-declaration-option,
-  language,
-  acronyms,
-  bibliography,
-  appendix,
-  author,
-  company,
-  supervisor,
-  font,
-  citation-style,
-  print-only-used-acronyms,
-  show-full-bibliography,
-  show-restriction-notice,
-  show-management-summary,
-  show-abstract,
+  thesis-type: none,
+  title: none,
+  faculty: none,
+  degree-program: none,
+  submission-date: none,
+  confidentiality-period: none,
+  ai-declaration-option: none,
+  language: none,
+  acronyms: none,
+  bibliography: none,
+  appendix: none,
+  author: none,
+  company: none,
+  supervisor: none,
+  font: none,
+  citation-style: none,
+  print-only-used-acronyms: none,
+  show-full-bibliography: none,
+  show-restriction-notice: none,
+  show-management-summary: none,
+  show-abstract: none,
 ) = {
   // check thesis-type
-  if (thesis-type == none or thesis-type == "") {
+  if is-missing(thesis-type) {
     panic("Thesis type is missing")
   }
 
   // check title
-  if (title == none or title == "") {
+  if is-missing(title) {
     panic("Title is missing")
   }
 
   // check faculty
-  if (faculty == none or faculty == "") {
+  if is-missing(faculty) {
     panic("Faculty is missing")
   }
 
   // check degree program
-  if (degree-program == none or degree-program == "") {
+  if is-missing(degree-program) {
     panic("Degree program is missing")
   }
 
   // check submission date
-  if (submission-date == none or submission-date == "") {
+  if is-missing(submission-date) {
     panic("Submission date is missing")
   }
 
   // check confidentiality period
-  if (confidentiality-period == none or confidentiality-period == "") {
+  if is-missing(confidentiality-period) {
     panic("Confidentiality period is missing")
   }
 
   // check ai declaration option
-  if (
-    ai-declaration-option == none
-      or ai-declaration-option == ""
-      or (ai-declaration-option != 1 and ai-declaration-option != 2 and ai-declaration-option != 3)
-  ) {
+  if ai-declaration-option not in (1, 2, 3) {
     panic("AI declaration option is missing or out of bounds. Please provide 1, 2 or 3.")
   }
 
   // check language
-  if (language == none or language == "") {
+  if is-missing(language) {
     panic("Language is missing")
   }
 
-  if (language != "de" and language != "en") {
+  if language not in ("de", "en") {
     panic("Invalid language. Please use 'de' for German or 'en' for English.")
   }
 
   // check acronyms
-  if (acronyms == none or type(acronyms) != dictionary) {
+  if type(acronyms) != dictionary {
     panic("Acronyms dictionary is missing or not a dictionary")
   }
 
   // check literature file
-  if (bibliography == none or bibliography == "") {
-    panic("Literature file is missing")
+  if is-missing(bibliography) {
+    panic("Bibliography is missing")
   }
 
   // check appendix
-  if (appendix != none and type(appendix) != content) {
+  if appendix != none and type(appendix) != content {
     panic("Appendix must be content or none")
   }
 
   // check author
-  if (author == none or type(author) != dictionary) {
+  if type(author) != dictionary {
     panic("Author is missing or not a dictionary")
   }
 
   // check supervisor
-  if (supervisor == none or supervisor == "") {
+  if is-missing(supervisor) {
     panic("Supervisor is missing")
   }
 
   // check font
-  if (font == none or font == "") {
+  if is-missing(font) or font == () {
     panic("Font is missing")
   }
 
   // check citation style
-  if (citation-style == none or citation-style == "") {
+  if is-missing(citation-style) {
     panic("Citation style is missing")
   }
 
