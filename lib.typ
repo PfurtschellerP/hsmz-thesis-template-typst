@@ -6,7 +6,7 @@
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
   ABSTRACT, APPENDIX, BIBLIOGRAPHY, FORMULA, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES,
-  LIST_OF_FORMULAS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, WORD_COUNT,
+  LIST_OF_FORMULAS, LIST_OF_SYMBOLS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, WORD_COUNT,
 )
 #import "check-attributes.typ": check-attributes
 
@@ -34,6 +34,7 @@
   ai-declaration-option: none,
   language: none,
   acronyms: none,
+  symbols: (),
   bibliography: none,
   appendix: none,
   management-summary: [],
@@ -63,6 +64,7 @@
     ai-declaration-option: ai-declaration-option,
     language: language,
     acronyms: acronyms,
+    symbols: symbols,
     bibliography: bibliography,
     appendix: appendix,
     author: author,
@@ -218,6 +220,18 @@
     sorted: "up",
     row-gutter: 10pt,
   )
+
+  // the list of symbols is only required if symbols are used (Leitfaden, Section 2.3)
+  if symbols.len() > 0 {
+    pagebreak()
+    heading(LIST_OF_SYMBOLS.at(language), level: 1, outlined: true)
+    // same layout as the list of abbreviations (acrostiche: first column 20% of the width)
+    grid(
+      columns: (20%, 80%),
+      row-gutter: 10pt,
+      ..symbols.flatten(),
+    )
+  }
 
   // the list of formulas is only required if formulas are used (Leitfaden, Section 2.3); it lists every numbered
   // formula with its number, the formula itself and the page

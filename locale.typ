@@ -9,6 +9,11 @@
   "en": "List of Tables",
 )
 
+#let LIST_OF_SYMBOLS = (
+  "de": "Symbolverzeichnis",
+  "en": "List of Symbols",
+)
+
 #let LIST_OF_FORMULAS = (
   "de": "Formelverzeichnis",
   "en": "List of Formulas",

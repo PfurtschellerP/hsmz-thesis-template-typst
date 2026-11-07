@@ -11,6 +11,7 @@
   ai-declaration-option: none,
   language: none,
   acronyms: none,
+  symbols: none,
   bibliography: none,
   appendix: none,
   author: none,
@@ -67,6 +68,11 @@
   // check acronyms
   if type(acronyms) != dictionary {
     panic("Acronyms dictionary is missing or not a dictionary")
+  }
+
+  // check symbols
+  if type(symbols) != array or symbols.any(it => type(it) != array or it.len() != 2) {
+    panic("Symbols must be a list of (symbol, description) pairs, e.g. (($alpha$, [Signifikanzniveau]),)")
   }
 
   // check literature file
