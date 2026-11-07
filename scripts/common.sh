@@ -20,7 +20,7 @@ PACKAGE_VERSION="$(manifest_value version)"
 # Files that are published to typst/packages: the manifest, docs, license, thumbnail, the library and the template
 PACKAGE_PATTERN='^(typst\.toml|README\.md|LICENSE|thumbnail\.png|logo_hsmz\.svg|[^/]+\.typ|template/.+)$'
 # Files that belong to the development repository only
-DEV_ONLY_PATTERN='^(\.github/|\.vscode/|scripts/|\.gitignore$|RELEASING\.md$)'
+DEV_ONLY_PATTERN='^(\.github/|\.vscode/|scripts/|\.gitignore$|RELEASING\.md$|renovate\.json$)'
 
 # Create a temporary package directory in which @preview/<name>:<version> points to this checkout, so that the
 # template can be compiled before the version is published. Prints the path to pass to `typst --package-path`.

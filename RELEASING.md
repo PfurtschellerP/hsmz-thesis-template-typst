@@ -117,9 +117,9 @@ Pushing the tag starts [`release.yml`](.github/workflows/release.yml). It
 2. compiles the sample thesis,
 3. assembles the package with [`scripts/package.sh`](scripts/package.sh). Only the files that users need are copied:
    `typst.toml`, `README.md`, `LICENSE`, `thumbnail.png`, the logo, the `.typ` files of the library and the
-   `template/` folder. `.github/`, `.vscode/`, `scripts/`, `.gitignore` and `RELEASING.md` are never submitted. Both
-   lists are defined in [`scripts/common.sh`](scripts/common.sh); if you add a file that matches neither, packaging
-   (and therefore CI) fails until you add it to one of them,
+   `template/` folder. `.github/`, `.vscode/`, `scripts/`, `.gitignore`, `RELEASING.md` and `renovate.json` are never
+   submitted. Both lists are defined in [`scripts/common.sh`](scripts/common.sh); if you add a file that matches
+   neither, packaging (and therefore CI) fails until you add it to one of them,
 4. creates the GitHub release with automatically generated release notes (see [Release notes](#release-notes)) and
    attaches `sample-thesis-X.Y.Z.pdf` and `hsmz-thesis-unofficial-X.Y.Z.zip`.
 
@@ -220,6 +220,17 @@ submission uses them as the description of the typst/packages pull request as we
   changes with `!` (e.g. `feat!: ...`).
 - Keep the individual commits of a pull request meaningful as well. They are listed in the "Full Changelog" comparison.
 - You can edit the notes on the GitHub release page after the release has been created.
+
+## Dependency updates
+
+[Renovate](https://docs.renovatebot.com/) ([`renovate.json`](renovate.json)) opens pull requests when a new version of a
+Typst package imported by the template (e.g. `@preview/acrostiche`) or of a GitHub Action is available. The PR titles
+follow Conventional Commits (`chore(deps): ...`). The template's own import in `template/main.typ` is excluded, because
+`scripts/bump-version.sh` manages it.
+
+CI compiles every update with the minimum Typst version. If an update needs a newer compiler, either raise `compiler` in
+`typst.toml` (and the minimum version in CI) or close the pull request. Updates reach users only with the next release
+(usually a patch version).
 
 ## Testing locally
 
