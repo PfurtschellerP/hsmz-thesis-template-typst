@@ -134,6 +134,14 @@
   show heading.where(level: 2): set block(above: 1.5em, below: 1.5em)
   show heading.where(level: 3): set block(above: 1.5em, below: 1.5em)
 
+  // Captions above figures and tables in APA style (Leitfaden, Section 3.10):
+  // bold label ("Abbildung 1") followed by the title in italics on the next line
+  set figure.caption(position: top)
+  show figure.caption: it => block(width: 100%, align(left, [
+    #text(weight: "bold")[#it.supplement #context it.counter.display(it.numbering)]\
+    #emph(it.body)
+  ]))
+
   if show-management-summary {
     heading(MANAGEMENT_SUMMARY.at(language), outlined: false, level: 1)
     management-summary
