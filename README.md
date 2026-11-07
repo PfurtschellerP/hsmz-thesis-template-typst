@@ -22,12 +22,13 @@ creates the following files:
 
 | File | Content |
 | --- | --- |
-| `main.typ` | Thesis data, settings and the main text |
+| `main.typ` | Thesis data, settings and the main text with examples for citations, footnotes, tables, figures, formulas, code and cross-references |
 | `summary.typ` | Abstract and Management Summary |
 | `acronyms.typ` | Acronyms for the list of abbreviations |
 | `appendix.typ` | Appendix (each level 1 heading is one appendix: Anhang A, Anhang B, ...) |
 | `literature.bib` | Bibliography (BibLaTeX or Hayagriva) |
 | `assets/sample-signature.png` | Placeholder for your scanned signature |
+| `assets/sample-figure.svg` | Example figure (delete it together with the example text) |
 
 ## Features
 
