@@ -5,8 +5,8 @@
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
-  ABSTRACT, APPENDIX, BIBLIOGRAPHY, FORMULA, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES,
-  LIST_OF_FORMULAS, LIST_OF_SYMBOLS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, WORD_COUNT,
+  ABSTRACT, APPENDIX, BIBLIOGRAPHY, DRAFT, FORMULA, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES,
+  LIST_OF_FORMULAS, LIST_OF_SYMBOLS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, OPEN_TODOS, PAGE, WORD_COUNT,
 )
 #import "check-attributes.typ": check-attributes
 
@@ -21,6 +21,17 @@
 #let figure-note(body) = context block(width: 100%, above: 0.65em, align(left, text(size: 0.9em)[
   #emph(NOTE.at(text.lang, default: NOTE.en)). #body
 ]))
+
+// open item, e.g. #todo[Quelle ergänzen]. It is highlighted in the text, listed at the beginning of the document in
+// draft mode and not included in the word count. Compilation fails if open items remain with `draft: false`.
+#let todo(body) = [#highlight(fill: rgb("#ffe07a"), extent: 1pt)[*TODO:* #body] <no-wc>#metadata(body) <hsmz-todo>]
+
+// page number of a location as it is printed on the page (e.g. "IV" or "12"), or the physical page number for pages
+// without a page number
+#let printed-page-number(loc) = {
+  let page-numbering = loc.page-numbering()
+  if page-numbering == none { str(loc.page()) } else { numbering(page-numbering, ..counter(page).at(loc)) }
+}
 
 // main entrypoint for this template
 #let hsmz-thesis-unofficial(
@@ -52,6 +63,7 @@
   show-management-summary: false,
   show-abstract: true,
   show-word-count: true,
+  draft: false,
   body,
 ) = {
   check-attributes(
@@ -78,6 +90,7 @@
     show-management-summary: show-management-summary,
     show-abstract: show-abstract,
     show-word-count: show-word-count,
+    draft: draft,
   )
 
   // global page and text settings (Leitfaden, Section 2.4)
@@ -93,6 +106,10 @@
   set page(
     paper: "a4",
     margin: (top: 2cm, bottom: 2cm, left: 4.5cm, right: 1.5cm),
+    // watermark in draft mode
+    background: if draft {
+      rotate(-45deg, text(size: 90pt, weight: "bold", fill: luma(92%), DRAFT.at(language)))
+    },
   )
   // Typst's `leading` is the gap between two lines, not the line pitch: with Arial, a leading of 1em results in a
   // baseline-to-baseline distance of ~1.7em, which matches 1.5 line spacing in word processors.
@@ -116,6 +133,30 @@
   // single formula, use `#math.equation(block: true, numbering: none, $ ... $)`.
   set math.equation(numbering: "(1)", supplement: FORMULA.at(language))
 
+  // draft mode: list of the open items in front of the document
+  if draft {
+    context {
+      let todos = query(<hsmz-todo>)
+      if todos.len() > 0 {
+        text([#OPEN_TODOS.at(language) (#todos.len())], size: 18pt, weight: 600)
+        v(1em)
+        set par(justify: false)
+        grid(
+          columns: (auto, 1fr),
+          column-gutter: 1.5em,
+          row-gutter: 1em,
+          ..todos
+            .map(it => (
+              link(it.location(), [#PAGE.at(language) #printed-page-number(it.location())]),
+              it.value,
+            ))
+            .flatten(),
+        )
+        pagebreak()
+      }
+    }
+  }
+
   // pre-text
   if show-restriction-notice {
     restriction-notice(title, company, confidentiality-period)
@@ -134,7 +175,8 @@
 
   declaration-of-originality(
     ai-declaration-option,
-    author,
+    // no scanned signature on drafts
+    if draft { author + (signature-image: none) } else { author },
     title,
     degree-program,
     supervisor,
@@ -313,5 +355,21 @@
     counter(heading).update(0)
 
     appendix
+  }
+
+  // open items must be resolved before the final version is created
+  if not draft {
+    context {
+      let todos = query(<hsmz-todo>)
+      if todos.len() > 0 {
+        let pages = todos.map(it => printed-page-number(it.location())).dedup().join(", ")
+        panic(
+          str(todos.len())
+            + " open todo(s) on page(s) "
+            + pages
+            + ". Resolve them, or set draft: true while you are still writing.",
+        )
+      }
+    }
   }
 }

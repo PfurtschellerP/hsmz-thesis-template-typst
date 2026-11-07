@@ -24,6 +24,7 @@
   show-management-summary: none,
   show-abstract: none,
   show-word-count: none,
+  draft: none,
 ) = {
   // check thesis-type
   if is-missing(thesis-type) {
@@ -143,6 +144,10 @@
 
   if type(show-word-count) != bool {
     panic("show-word-count must be a boolean value")
+  }
+
+  if type(draft) != bool {
+    panic("draft must be a boolean value")
   }
 
   // final theses need a Management Summary or an Abstract, or both (Leitfaden, Section 2.3)

@@ -76,6 +76,7 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 | `show-abstract` | Show the Abstract | `true` |
 | `show-management-summary` | Show the Management Summary | `false` |
 | `show-word-count` | Show the word count at the end of the main text | `true` |
+| `draft` | Draft mode: watermark, list of open todos in front, no scanned signature (see [Draft mode](#draft-mode)) | `false` |
 | `font` | Font or list of fonts (fallbacks) | `("Arial", "Liberation Sans", "Arimo")` |
 | `citation-style` | Any [citation style supported by Typst](https://typst.app/docs/reference/model/bibliography/#parameters-style) | `"apa"` |
 | `print-only-used-acronyms` | Only list acronyms that are used in the text | `true` |
@@ -84,6 +85,19 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 Bachelor's and Master's theses need at least a Management Summary or an Abstract; compilation fails if both are
 switched off and `thesis-type` contains "Bachelor" or "Master". Practice-oriented theses usually have a Management
 Summary, research-oriented ones an Abstract, and some have both.
+
+### Draft mode
+
+While you are writing, set `draft: true`. Every page then gets an "ENTWURF" watermark, the scanned signature is left
+out, and a list of all open todos (with links to their pages) is placed in front of the document. Mark open items in
+the text with `todo`:
+
+```typ
+Die Digitalisierung verändert den Mittelstand. #todo[Quelle ergänzen]
+```
+
+Todos are highlighted and not included in the word count. When you set `draft: false` for the final version,
+compilation fails as long as todos remain, and the error message lists their pages.
 
 ### Fonts
 

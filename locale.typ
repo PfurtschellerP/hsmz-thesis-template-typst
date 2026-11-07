@@ -96,3 +96,19 @@
   "de": "Anmerkung",
   "en": "Note",
 )
+
+// draft mode
+#let DRAFT = (
+  "de": "ENTWURF",
+  "en": "DRAFT",
+)
+
+#let OPEN_TODOS = (
+  "de": "Offene Punkte",
+  "en": "Open items",
+)
+
+#let PAGE = (
+  "de": "Seite",
+  "en": "Page",
+)
