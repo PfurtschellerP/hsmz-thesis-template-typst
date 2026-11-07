@@ -37,8 +37,8 @@ The template creates the components of the thesis in the order required by the g
 2. Title page
 3. Eigenständigkeitserklärung (declaration of originality) with the three AI options
 4. Management Summary and/or Abstract (without page numbers)
-5. Table of contents, list of figures, list of tables, list of abbreviations and list of formulas (Roman page
-   numbers; the lists of figures, tables and formulas only if the thesis contains any)
+5. Table of contents, list of figures, list of tables, list of abbreviations, list of symbols and list of formulas
+   (Roman page numbers; the lists of figures, tables, symbols and formulas only if the thesis contains any)
 6. Main text (Arabic page numbers starting at 1), followed by the word count of the main text
 7. Bibliography, list of appendices and appendix (Roman page numbers, continued)
 
@@ -65,6 +65,7 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 | `language` | `"de"` or `"en"` | required |
 | `ai-declaration-option` | Option of the declaration of originality agreed with your supervisor: `1` (AI tools allowed, brief documentation), `2` (AI tools allowed, extensive documentation) or `3` (AI tools prohibited) | required |
 | `acronyms` | Dictionary of acronyms, see `acronyms.typ` | required |
+| `symbols` | List of `(symbol, description)` pairs for the list of symbols, e.g. `(($alpha$, [Signifikanzniveau]),)`; the list is only shown if it isn't empty | `()` |
 | `bibliography` | `bibliography("literature.bib")` | required |
 | `company` | Company or institution for the restriction notice | required if `show-restriction-notice` is `true` |
 | `confidentiality-period` | End of the confidentiality period for the restriction notice, e.g. `"01.01.2030"` | required if `show-restriction-notice` is `true` |
@@ -110,6 +111,18 @@ source (or "Eigene Darstellung"):
     + figure-note[Eigene Darstellung, basierend auf Statistisches Bundesamt (2021, S. 73).],
   caption: [Erwerbstätigenquote 60–64-Jähriger],
 ) <tab:quote>
+```
+
+### Symbols
+
+If you use symbols (e.g. in formulas), list them with the `symbols` parameter. They appear in the list of symbols in
+the given order:
+
+```typ
+symbols: (
+  ($alpha$, [Signifikanzniveau]),
+  ($n$, [Stichprobengröße]),
+),
 ```
 
 ### Formulas
