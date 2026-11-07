@@ -4,10 +4,10 @@
 #import "summary.typ": abstract, management-summary
 
 #show: hsmz-thesis-unofficial.with(
-  thesis-type: "Master's Thesis",
+  thesis-type: "Masterarbeit",
   title: "Untersuchung der Auswirkungen von [Thema] auf [Bereich] unter besonderer Berücksichtigung von [Aspekt] in [Kontext]",
   faculty: "Wirtschaft",
-  degree-program: "IT-Management",
+  degree-program: "IT-Management M. Sc.",
   submission-date: "01.01.2026",
   confidentiality-period: "01.01.2036",
   ai-declaration-option: 1,
@@ -19,8 +19,8 @@
   abstract: abstract,
   author: (
     name: "Max Mustermann",
-    matriculation-number: "12345",
-    address: (street: "Musterstraße 1", zip: "12345", city: "Musterstadt"),
+    matriculation-number: "1234567",
+    address: (street: "Musterstraße 1", zip: "55128", city: "Mainz"),
     signature-image: image("./assets/sample-signature.png"),
   ),
   company: "Musterfirma",
@@ -61,8 +61,8 @@ Forschungsmethodik streng nach der Literatur @wildeForschungsmethodenWirtschafts
 
 = Theorie
 
-= Praxis
+= Methodik
 
-= Diskussion
+= Ergebnisse
 
-= Zusammenfassung
+= Diskussion und Fazit
