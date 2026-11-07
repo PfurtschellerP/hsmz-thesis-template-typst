@@ -22,22 +22,22 @@
 )
 
 #let FACULTY_OF = (
-  "de": "Fakultät",
+  "de": "Fachbereich",
   "en": "Faculty of",
 )
 
 #let SUBMITTED_BY = (
-  "de": "Eingereicht von",
+  "de": "Vorgelegt von",
   "en": "Submitted by",
 )
 
 #let MATRICULATION_NUMBER = (
-  "de": "Matrikelnummer",
-  "en": "Matriculation Number",
+  "de": "Matrikel-Nr.",
+  "en": "Matriculation No.",
 )
 
 #let SUBMITTED_TO = (
-  "de": "Eingereicht bei",
+  "de": "Vorgelegt bei",
   "en": "Submitted to",
 )
 

@@ -30,6 +30,7 @@
   ]
 }
 
+// Titelseite – contents according to the Leitfaden (April 2025), Section 3.2 and the sample in its appendix
 #let title-page(
   thesis-type,
   title,
@@ -50,7 +51,8 @@
 
   align(center, [
 
-    #set text(size: 14pt)
+    #set text(size: 14pt, hyphenate: false)
+    #set par(justify: false)
 
     #text([#thesis-type\ ], size: 16pt, weight: 600)
     #DEGREE_PROGRAM.at(language) #degree-program
@@ -67,23 +69,23 @@
 
     #v(2cm)
 
-    #block(inset: (left: 2.5cm, right: 2.5cm), [
+    #block(inset: (left: 1cm, right: 1cm), [
       #text(
         [
           #show: set par(leading: 0.5em)
           #table(
             inset: 8pt,
-            columns: (1fr, 1fr),
+            columns: (auto, 1fr),
             stroke: none,
-            align: (right, left),
+            align: left,
             [#SUBMITTED_BY.at(language):],
             [
               #author.name\
               #author.address.street\
-              #author.address.zip, #author.address.city
+              #author.address.zip #author.address.city\
+              #MATRICULATION_NUMBER.at(language) #author.matriculation-number
             ],
 
-            [#MATRICULATION_NUMBER.at(language):], author.matriculation-number,
             [#SUBMITTED_TO.at(language):], supervisor,
             [#SUBMITTED_ON.at(language):], submission-date,
           )],
