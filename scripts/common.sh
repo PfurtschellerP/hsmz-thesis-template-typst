@@ -31,3 +31,15 @@ local_package_path() {
   ln -s "$REPO_ROOT" "$dir/preview/$PACKAGE_NAME/$PACKAGE_VERSION"
   echo "$dir"
 }
+
+# Directory in which Typst (and the Tinymist editor extension) look for local packages of this template. Local packages
+# take precedence over downloaded ones, also in the preview namespace.
+local_data_package_dir() {
+  local data
+  case "$(uname -s)" in
+    Darwin) data="$HOME/Library/Application Support" ;;
+    MINGW* | MSYS* | CYGWIN*) data="$APPDATA" ;;
+    *) data="${XDG_DATA_HOME:-$HOME/.local/share}" ;;
+  esac
+  echo "$data/typst/packages/preview/$PACKAGE_NAME"
+}

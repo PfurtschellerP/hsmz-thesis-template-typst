@@ -241,23 +241,31 @@ scripts/compile-template.sh                    # writes template/main.pdf
 TYPST=/path/to/typst-0.15.0 scripts/compile-template.sh   # test with the minimum compiler version
 ```
 
-To test `typst init` exactly as users will run it, and to get rid of the "package not found" error in your editor,
-link the repository as a local package (local packages in `@preview` take precedence over downloaded ones):
+While a version is not published yet, `@preview/hsmz-thesis-unofficial:X.Y.Z` can't be downloaded, so your editor
+(Tinymist) shows "package not found" in `template/main.typ`. Link the checkout as a local package; local packages take
+precedence over downloaded ones, also in the `@preview` namespace:
+
+```bash
+scripts/link-local-package.sh            # links the version in typst.toml to this checkout
+scripts/link-local-package.sh --remove   # use the published versions again
+```
+
+Only the current version is linked, and `scripts/bump-version.sh` moves the link to the new version. The link is
+global for your user (in `~/.local/share/typst/packages` on Linux, `~/Library/Application Support/typst/packages` on
+macOS), so other projects that import exactly this version use the checkout as well. On Windows, Git Bash creates a
+copy instead of a link unless symbolic links are enabled.
+
+With the link in place, you can also test `typst init` exactly as users will run it:
 
 ```bash
 version=$(sed -n 's/^version = "\(.*\)"/\1/p' typst.toml)
-data_dir="${XDG_DATA_HOME:-$HOME/.local/share}/typst/packages/preview/hsmz-thesis-unofficial"   # Linux
-# macOS: ~/Library/Application Support/typst/packages/preview/hsmz-thesis-unofficial
-# Windows: %APPDATA%\typst\packages\preview\hsmz-thesis-unofficial
-mkdir -p "$data_dir"
-ln -s "$PWD" "$data_dir/$version"
-
 cd "$(mktemp -d)"
 typst init "@preview/hsmz-thesis-unofficial:$version" test
 cd test && typst compile main.typ
 ```
 
-Remove the link after the version has been published, so that you get the published version again.
+CI and `scripts/compile-template.sh` don't need the link: they use a temporary package directory
+(`typst --package-path`).
 
 Before committing, format all Typst files with [typstyle](https://github.com/typstyle-rs/typstyle) (the same check runs
 in CI):
