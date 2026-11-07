@@ -112,3 +112,13 @@
   "de": "Seite",
   "en": "Page",
 )
+
+#let WORDS_OF_MAX = (
+  "de": (count, max) => [#count von max. #max Wörtern. Bitte kürzen.],
+  "en": (count, max) => [#count of max. #max words. Please shorten the text.],
+)
+
+#let WORDS_GUIDELINE = (
+  "de": guideline => [Richtwert: #guideline Wörter],
+  "en": guideline => [guideline: #guideline words],
+)
