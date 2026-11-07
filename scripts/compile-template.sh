@@ -6,7 +6,7 @@
 # Examples:
 #   scripts/compile-template.sh                      # -> template/main.pdf
 #   scripts/compile-template.sh thesis.pdf
-#   TYPST=typst-0.13.0 scripts/compile-template.sh   # use a specific compiler binary
+#   TYPST=typst-0.15.0 scripts/compile-template.sh   # use a specific compiler binary
 #
 # To regenerate the Typst Universe thumbnail (the title page, i.e. page 2):
 #   scripts/compile-template.sh thumbnail.png --format png --pages 2 --ppi 250

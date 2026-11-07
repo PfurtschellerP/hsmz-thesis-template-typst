@@ -238,7 +238,7 @@ Compile the template against your checkout, without installing or publishing any
 
 ```bash
 scripts/compile-template.sh                    # writes template/main.pdf
-TYPST=/path/to/typst-0.13.0 scripts/compile-template.sh   # test with the minimum compiler version
+TYPST=/path/to/typst-0.15.0 scripts/compile-template.sh   # test with the minimum compiler version
 ```
 
 To test `typst init` exactly as users will run it, and to get rid of the "package not found" error in your editor,

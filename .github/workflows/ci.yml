@@ -12,7 +12,7 @@ permissions:
 env:
   TYPSTYLE_VERSION: v0.15.2
   # minimum supported compiler version, keep in sync with `compiler` in typst.toml
-  TYPST_MIN_VERSION: 0.13.0
+  TYPST_MIN_VERSION: 0.15.0
 
 jobs:
   # job id kept as "typstyle" (status check name of the former "Typst Formatting" workflow)
