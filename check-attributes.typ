@@ -1,5 +1,21 @@
 #import "utils.typ": final-thesis-level, is-missing
 
+// Every message names the parameter of `hsmz-thesis-unofficial.with(...)` in main.typ and shows an example, so that
+// users can fix the problem without reading the source code. Messages are kept on a single line, because older
+// Typst versions print them as a quoted string.
+#let fail(message) = panic("hsmz-thesis-unofficial: " + message)
+
+#let fail-missing(parameter, example, note: none) = fail(
+  "the parameter `"
+    + parameter
+    + "` is missing"
+    + if note != none { " (" + note + ")" } else { "" }
+    + ". Add it to hsmz-thesis-unofficial.with(...) in main.typ, e.g. "
+    + parameter
+    + ": "
+    + example,
+)
+
 #let check-attributes(
   thesis-type: none,
   title: none,
@@ -26,140 +42,132 @@
   show-word-count: none,
   draft: none,
 ) = {
-  // check thesis-type
+  // thesis data
   if is-missing(thesis-type) {
-    panic("Thesis type is missing")
+    fail-missing("thesis-type", "\"Bachelorarbeit\"")
   }
 
-  // check title
   if is-missing(title) {
-    panic("Title is missing")
+    fail-missing("title", "\"Titel der Arbeit\"")
   }
 
-  // check faculty
   if is-missing(faculty) {
-    panic("Faculty is missing")
+    fail-missing("faculty", "\"Wirtschaft\"")
   }
 
-  // check degree program
   if is-missing(degree-program) {
-    panic("Degree program is missing")
+    fail-missing("degree-program", "\"Betriebswirtschaftslehre B. Sc.\"")
   }
 
-  // check submission date
   if is-missing(submission-date) {
-    panic("Submission date is missing")
+    fail-missing("submission-date", "datetime(year: 2026, month: 3, day: 31)")
   }
 
   for (name, date) in (("submission-date", submission-date), ("confidentiality-period", confidentiality-period)) {
     if date != none and type(date) not in (str, content, datetime) {
-      panic(name + " must be a date, e.g. datetime(year: 2026, month: 3, day: 31), or a string")
+      fail("`" + name + "` must be a date, e.g. " + name + ": datetime(year: 2026, month: 3, day: 31), or a string.")
     }
   }
 
-  // check ai declaration option
-  if ai-declaration-option not in (1, 2, 3) {
-    panic("AI declaration option is missing or out of bounds. Please provide 1, 2 or 3.")
+  if ai-declaration-option == none {
+    fail-missing(
+      "ai-declaration-option",
+      "1",
+      note: "the option of the declaration of originality agreed with your supervisor",
+    )
   }
 
-  // check language
-  if is-missing(language) {
-    panic("Language is missing")
+  if ai-declaration-option not in (1, 2, 3) {
+    fail(
+      "`ai-declaration-option` must be 1 (AI tools allowed, brief documentation), 2 (AI tools allowed, extensive documentation) or 3 (AI tools prohibited), not "
+        + repr(ai-declaration-option)
+        + ".",
+    )
   }
 
   if language not in ("de", "en") {
-    panic("Invalid language. Please use 'de' for German or 'en' for English.")
+    fail("`language` must be \"de\" (German) or \"en\" (English), not " + repr(language) + ".")
   }
 
-  // check acronyms
   if type(acronyms) != dictionary {
-    panic("Acronyms dictionary is missing or not a dictionary")
+    fail("`acronyms` must be a dictionary, e.g. acronyms: (\"IT\": \"Informationstechnik\"), or (:) for none.")
   }
 
-  // check symbols
   if type(symbols) != array or symbols.any(it => type(it) != array or it.len() != 2) {
-    panic("Symbols must be a list of (symbol, description) pairs, e.g. (($alpha$, [Signifikanzniveau]),)")
+    fail(
+      "`symbols` must be a list of (symbol, description) pairs, e.g. symbols: (($alpha$, [Signifikanzniveau]),). Note the comma at the end if there is only one symbol.",
+    )
   }
 
-  // check literature file
   if is-missing(bibliography) {
-    panic("Bibliography is missing")
+    fail-missing("bibliography", "bibliography(\"literature.bib\")")
   }
 
-  // check appendix
   if appendix != none and type(appendix) != content {
-    panic("Appendix must be content or none")
+    fail("`appendix` must be content, e.g. appendix: [= Fragebogen ...], or none.")
   }
 
-  // check author
-  if type(author) != dictionary {
-    panic("Author is missing or not a dictionary")
+  // people
+  if type(author) != dictionary or author.len() == 0 {
+    fail-missing(
+      "author",
+      "(name: \"Max Mustermann\", matriculation-number: \"1234567\", address: (street: \"Musterstraße 1\", zip: \"55128\", city: \"Mainz\"))",
+    )
   }
 
-  for key in ("name", "matriculation-number", "address") {
+  for (key, example) in (
+    ("name", "\"Max Mustermann\""),
+    ("matriculation-number", "\"1234567\""),
+    ("address", "(street: \"Musterstraße 1\", zip: \"55128\", city: \"Mainz\")"),
+  ) {
     if is-missing(author.at(key, default: none)) {
-      panic("Author attribute '" + key + "' is missing")
+      fail("`author` has no `" + key + "`. Add it to the author dictionary in main.typ, e.g. " + key + ": " + example)
     }
   }
 
   if type(author.address) != dictionary {
-    panic("Author address must be a dictionary with the keys 'street', 'zip' and 'city'")
+    fail(
+      "`author.address` must be a dictionary, e.g. address: (street: \"Musterstraße 1\", zip: \"55128\", city: \"Mainz\")",
+    )
   }
 
-  for key in ("street", "zip", "city") {
+  for (key, example) in (("street", "\"Musterstraße 1\""), ("zip", "\"55128\""), ("city", "\"Mainz\"")) {
     if is-missing(author.address.at(key, default: none)) {
-      panic("Author address attribute '" + key + "' is missing")
+      fail("`author.address` has no `" + key + "`. Add it to the address in main.typ, e.g. " + key + ": " + example)
     }
   }
 
-  // check supervisor
   if is-missing(supervisor) {
-    panic("Supervisor is missing")
+    fail-missing("supervisor", "\"Prof. Dr. Norma Neugier\"", note: "including the academic degree")
   }
 
-  // check font
+  // settings
   if is-missing(font) or font == () {
-    panic("Font is missing")
+    fail-missing("font", "(\"Arial\", \"Liberation Sans\")")
   }
 
-  // check citation style
   if is-missing(citation-style) {
-    panic("Citation style is missing")
+    fail-missing("citation-style", "\"apa\"")
   }
 
-  // Check, if settings are boolean
-  if type(print-only-used-acronyms) != bool {
-    panic("print-only-used-acronyms must be a boolean value")
-  }
-
-  if type(show-full-bibliography) != bool {
-    panic("show-full-bibliography must be a boolean value")
-  }
-
-  if type(show-restriction-notice) != bool {
-    panic("show-restriction-notice must be a boolean value")
-  }
-
-  if type(show-management-summary) != bool {
-    panic("show-management-summary must be a boolean value")
-  }
-
-  if type(show-abstract) != bool {
-    panic("show-abstract must be a boolean value")
-  }
-
-  if type(show-word-count) != bool {
-    panic("show-word-count must be a boolean value")
-  }
-
-  if type(draft) != bool {
-    panic("draft must be a boolean value")
+  for (name, value) in (
+    ("print-only-used-acronyms", print-only-used-acronyms),
+    ("show-full-bibliography", show-full-bibliography),
+    ("show-restriction-notice", show-restriction-notice),
+    ("show-management-summary", show-management-summary),
+    ("show-abstract", show-abstract),
+    ("show-word-count", show-word-count),
+    ("draft", draft),
+  ) {
+    if type(value) != bool {
+      fail("`" + name + "` must be true or false, not " + repr(value) + ".")
+    }
   }
 
   // final theses need a Management Summary or an Abstract, or both (Leitfaden, Section 2.3)
   if final-thesis-level(thesis-type) != none and not show-management-summary and not show-abstract {
-    panic(
-      "A "
+    fail(
+      "a "
         + thesis-type
         + " needs a Management Summary or an Abstract (or both). Set show-abstract: true or show-management-summary: true.",
     )
@@ -167,14 +175,13 @@
 
   // company and confidentiality period are only needed for the restriction notice
   if show-restriction-notice {
+    let note = "required for the restriction notice; set show-restriction-notice: false if you don't need one"
     if is-missing(company) {
-      panic("Company is missing (required for the restriction notice; set show-restriction-notice: false to hide it)")
+      fail-missing("company", "\"Musterfirma GmbH\"", note: note)
     }
 
     if is-missing(confidentiality-period) {
-      panic(
-        "Confidentiality period is missing (required for the restriction notice; set show-restriction-notice: false to hide it)",
-      )
+      fail-missing("confidentiality-period", "datetime(year: 2031, month: 3, day: 31)", note: note)
     }
   }
 }
