@@ -11,7 +11,8 @@ of the Fachbereich Wirtschaft.
 
 ## Usage
 
-Initialize a new thesis with `typst init`:
+The template requires Typst 0.15.0 or newer (the Typst web app always uses the latest version). Initialize a new thesis
+with `typst init`:
 
 ```bash
 typst init @preview/hsmz-thesis-unofficial:0.4.0
