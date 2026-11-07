@@ -71,7 +71,7 @@
     show-abstract: show-abstract,
   )
 
-  // global page and text settings
+  // global page and text settings (Leitfaden, Section 2.4)
   set text(
     font: font,
     size: 11pt,
@@ -83,6 +83,7 @@
   )
   set page(
     paper: "a4",
+    margin: (top: 2cm, bottom: 2cm, left: 4.5cm, right: 1.5cm),
   )
   // Typst's `leading` is the gap between two lines, not the line pitch: with Arial, a leading of 1em results in a
   // baseline-to-baseline distance of ~1.7em, which matches 1.5 line spacing in word processors.
@@ -145,11 +146,6 @@
   )
   set heading(
     numbering: none,
-  )
-
-  // page settings for the listings and content
-  set page(
-    margin: (top: 2cm, bottom: 2cm, left: 4.5cm, right: 1.5cm),
   )
 
   show table: set par(
