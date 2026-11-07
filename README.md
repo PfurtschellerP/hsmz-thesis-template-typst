@@ -38,7 +38,7 @@ The template creates the components of the thesis in the order required by the g
 3. Eigenständigkeitserklärung (declaration of originality) with the three AI options
 4. Management Summary and/or Abstract (without page numbers)
 5. Table of contents, list of figures, list of tables, list of abbreviations, list of symbols and list of formulas
-   (Roman page numbers; the lists of figures, tables, symbols and formulas only if the thesis contains any)
+   (Roman page numbers; each list only if the thesis contains figures, tables, abbreviations, symbols or formulas)
 6. Main text (Arabic page numbers starting at 1), followed by the word count of the main text
 7. Bibliography, list of appendices and appendix (Roman page numbers, continued)
 
@@ -57,14 +57,14 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 | --- | --- | --- |
 | `thesis-type` | e.g. `"Bachelorarbeit"`, `"Masterarbeit"`, `"Praxisbericht"`, `"Hausarbeit"` | required |
 | `title` | Title of the thesis | required |
-| `faculty` | Fachbereich, e.g. `"Wirtschaft"` | required |
+| `faculty` | Fachbereich | `"Wirtschaft"` |
 | `degree-program` | Degree program including the degree, e.g. `"Betriebswirtschaftslehre B. Sc."` | required |
 | `submission-date` | Submission date, preferably as a date: `datetime(year: 2025, month: 12, day: 1)` (printed as "01.12.2025", or "1 December 2025" in English). A string is printed as it is. | required |
 | `supervisor` | Supervisor including the academic degree, e.g. `"Prof. Dr. Norma Neugier"` | required |
 | `author` | Dictionary with `name`, `matriculation-number`, `address: (street, zip, city)` and optionally `signature-image` (scanned signature; without it, space for a handwritten signature is left) | required |
-| `language` | `"de"` or `"en"` | required |
+| `language` | `"de"` or `"en"` | `"de"` |
 | `ai-declaration-option` | Option of the declaration of originality agreed with your supervisor: `1` (AI tools allowed, brief documentation), `2` (AI tools allowed, extensive documentation) or `3` (AI tools prohibited) | required |
-| `acronyms` | Dictionary of acronyms, see `acronyms.typ` | required |
+| `acronyms` | Dictionary of acronyms, see `acronyms.typ`; without acronyms, the list of abbreviations is left out | `(:)` |
 | `symbols` | List of `(symbol, description)` pairs for the list of symbols, e.g. `(($alpha$, [Signifikanzniveau]),)`; the list is only shown if it isn't empty | `()` |
 | `bibliography` | `bibliography("literature.bib")` | required |
 | `company` | Company or institution for the restriction notice | required if `show-restriction-notice` is `true` |
