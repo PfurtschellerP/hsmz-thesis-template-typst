@@ -1,5 +1,5 @@
 // Markdown-like checklists
-#import "@preview/cheq:0.3.1": checklist // https://typst.app/universe/package/cheq/
+#import "@preview/cheq:0.4.0": checklist // https://typst.app/universe/package/cheq/
 
 // locale
 #import "utils.typ": format-date
