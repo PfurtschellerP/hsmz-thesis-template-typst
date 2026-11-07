@@ -84,8 +84,10 @@
   set page(
     paper: "a4",
   )
+  // Typst's `leading` is the gap between two lines, not the line pitch: with Arial, a leading of 1em results in a
+  // baseline-to-baseline distance of ~1.7em, which matches 1.5 line spacing in word processors.
   set par(
-    leading: 1.5em,
+    leading: 1em,
     spacing: 2em,
     justify: true,
   )
