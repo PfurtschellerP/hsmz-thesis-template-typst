@@ -49,11 +49,6 @@
     panic("Submission date is missing")
   }
 
-  // check confidentiality period
-  if is-missing(confidentiality-period) {
-    panic("Confidentiality period is missing")
-  }
-
   // check ai declaration option
   if ai-declaration-option not in (1, 2, 3) {
     panic("AI declaration option is missing or out of bounds. Please provide 1, 2 or 3.")
@@ -138,5 +133,18 @@
 
   if type(show-abstract) != bool {
     panic("show-abstract must be a boolean value")
+  }
+
+  // company and confidentiality period are only needed for the restriction notice
+  if show-restriction-notice {
+    if is-missing(company) {
+      panic("Company is missing (required for the restriction notice; set show-restriction-notice: false to hide it)")
+    }
+
+    if is-missing(confidentiality-period) {
+      panic(
+        "Confidentiality period is missing (required for the restriction notice; set show-restriction-notice: false to hide it)",
+      )
+    }
   }
 }
