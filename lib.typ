@@ -6,7 +6,7 @@
 #import "locale.typ": (
   ABSTRACT, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES, MANAGEMENT_SUMMARY,
 )
-#import "check-attributes.typ": *
+#import "check-attributes.typ": check-attributes
 
 // outlined outline for figures, tables, etc. that itself is outlined in the table of contents
 #let outlined-outline(..args) = {
@@ -48,27 +48,27 @@
   body,
 ) = {
   check-attributes(
-    thesis-type,
-    title,
-    faculty,
-    degree-program,
-    submission-date,
-    confidentiality-period,
-    ai-declaration-option,
-    language,
-    acronyms,
-    bibliography,
-    appendix,
-    author,
-    company,
-    supervisor,
-    font,
-    citation-style,
-    print-only-used-acronyms,
-    show-full-bibliography,
-    show-restriction-notice,
-    show-management-summary,
-    show-abstract,
+    thesis-type: thesis-type,
+    title: title,
+    faculty: faculty,
+    degree-program: degree-program,
+    submission-date: submission-date,
+    confidentiality-period: confidentiality-period,
+    ai-declaration-option: ai-declaration-option,
+    language: language,
+    acronyms: acronyms,
+    bibliography: bibliography,
+    appendix: appendix,
+    author: author,
+    company: company,
+    supervisor: supervisor,
+    font: font,
+    citation-style: citation-style,
+    print-only-used-acronyms: print-only-used-acronyms,
+    show-full-bibliography: show-full-bibliography,
+    show-restriction-notice: show-restriction-notice,
+    show-management-summary: show-management-summary,
+    show-abstract: show-abstract,
   )
 
   // global page and text settings
