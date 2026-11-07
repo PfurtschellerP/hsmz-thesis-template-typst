@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  TYPSTYLE_VERSION: v0.15.2
+  # minimum supported compiler version, keep in sync with `compiler` in typst.toml
+  TYPST_MIN_VERSION: 0.13.0
+
+jobs:
+  # job id kept as "typstyle" (status check name of the former "Typst Formatting" workflow)
+  typstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install typstyle
+        run: |
+          curl -fsSL -o /usr/local/bin/typstyle \
+            "https://github.com/typstyle-rs/typstyle/releases/download/${TYPSTYLE_VERSION}/typstyle-x86_64-unknown-linux-musl"
+          chmod +x /usr/local/bin/typstyle
+
+      - name: Check formatting
+        run: |
+          typstyle --check --line-width 120 . || {
+            echo "::error::Typst files are not properly formatted. Run 'typstyle -i --line-width 120 .' locally and commit the changes."
+            exit 1
+          }
+
+  versions:
+    name: Version references
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Check that typst.toml, template and README use the same version
+        run: scripts/check-version.sh
+
+  compile:
+    name: Compile template (Typst ${{ matrix.typst }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        typst: [min, latest]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v5
+        with:
+          typst-version: ${{ matrix.typst == 'min' && env.TYPST_MIN_VERSION || 'latest' }}
+
+      - name: Compile template
+        run: scripts/compile-template.sh thesis.pdf
+
+      - name: Upload PDF
+        if: matrix.typst == 'latest'
+        uses: actions/upload-artifact@v7
+        with:
+          name: thesis-preview
+          path: thesis.pdf
+
+  package-check:
+    name: Typst Universe package check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v5
+
+      # downloads all dependencies into the package cache, which is then mounted into the checker
+      - name: Compile template
+        run: scripts/compile-template.sh thesis.pdf
+
+      - name: Assemble package
+        run: scripts/package.sh dist
+
+      - name: Run typst package-check
+        run: |
+          name="$(sed -n 's/^name = "\(.*\)"/\1/p' typst.toml)"
+          version="$(sed -n 's/^version = "\(.*\)"/\1/p' typst.toml)"
+          docker run --rm \
+            -v "$PWD/dist/$name/$version:/data" \
+            -v "$HOME/.cache/typst:/cache/typst:ro" \
+            -v "$PWD/dist:/xdgdata/typst/packages/preview:ro" \
+            -e XDG_CACHE_HOME=/cache \
+            -e XDG_DATA_HOME=/xdgdata \
+            ghcr.io/typst/package-check:0.7.0 check
