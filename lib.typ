@@ -186,17 +186,22 @@
   outline()
   pagebreak()
 
-  outlined-outline(
-    title: [#LIST_OF_FIGURES.at(language)],
-    target: figure.where(kind: image),
-  )
-  pagebreak()
+  // the lists of figures and tables are only required if figures or tables are used (Leitfaden, Section 2.3)
+  context if query(figure.where(kind: image)).len() > 0 {
+    outlined-outline(
+      title: [#LIST_OF_FIGURES.at(language)],
+      target: figure.where(kind: image),
+    )
+    pagebreak()
+  }
 
-  outlined-outline(
-    title: [#LIST_OF_TABLES.at(language)],
-    target: figure.where(kind: table),
-  )
-  pagebreak()
+  context if query(figure.where(kind: table)).len() > 0 {
+    outlined-outline(
+      title: [#LIST_OF_TABLES.at(language)],
+      target: figure.where(kind: table),
+    )
+    pagebreak()
+  }
 
   init-acronyms(
     acronyms,
