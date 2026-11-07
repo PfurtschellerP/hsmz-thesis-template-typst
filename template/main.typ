@@ -43,6 +43,21 @@ Eine Thesis zum Thema #acr("IT") an der Hochschule Mainz.
 
 Forschungsmethodik streng nach der Literatur @wildeForschungsmethodenWirtschaftsinformatikEmpirische2007.
 
+== Aufbau der Arbeit
+
+@tab:beispiel zeigt, wie Tabellen mit Beschriftung und Anmerkung eingefügt werden.
+
+#figure(
+  table(
+    columns: 2,
+    [Kapitel], [Inhalt],
+    [1], [Einleitung],
+    [2], [Theorie],
+  )
+    + figure-note[Eigene Darstellung.],
+  caption: [Aufbau der Arbeit],
+) <tab:beispiel>
+
 = Theorie
 
 = Praxis

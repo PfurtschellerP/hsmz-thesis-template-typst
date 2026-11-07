@@ -60,3 +60,9 @@
   "de": "Management Summary",
   "en": "Management Summary",
 )
+
+// misc
+#let NOTE = (
+  "de": "Anmerkung",
+  "en": "Note",
+)

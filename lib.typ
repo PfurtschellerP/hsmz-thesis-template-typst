@@ -4,7 +4,7 @@
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
-  ABSTRACT, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES, MANAGEMENT_SUMMARY,
+  ABSTRACT, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE,
 )
 #import "check-attributes.typ": check-attributes
 
@@ -13,6 +13,12 @@
   show outline: set heading(outlined: true)
   outline(..args)
 }
+
+// note below a figure or table, e.g. for the source ("Anmerkung. Eigene Darstellung.")
+// usage: #figure(table(...) + figure-note[Eigene Darstellung.], caption: [...])
+#let figure-note(body) = context block(width: 100%, above: 0.65em, align(left, text(size: 0.9em)[
+  #emph(NOTE.at(text.lang, default: NOTE.en)). #body
+]))
 
 // workaround for the lack of a std scope so that we can pass a bibliography object around from the template to here
 #let std-bibliography = bibliography
