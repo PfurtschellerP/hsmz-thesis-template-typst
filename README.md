@@ -81,8 +81,9 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 | `print-only-used-acronyms` | Only list acronyms that are used in the text | `true` |
 | `show-full-bibliography` | List all entries of the bibliography file, not only cited ones (the guidelines require only cited ones) | `false` |
 
-Bachelor's and Master's theses need at least a Management Summary or an Abstract. Practice-oriented theses usually
-have a Management Summary, research-oriented ones an Abstract, and some have both.
+Bachelor's and Master's theses need at least a Management Summary or an Abstract; compilation fails if both are
+switched off and `thesis-type` contains "Bachelor" or "Master". Practice-oriented theses usually have a Management
+Summary, research-oriented ones an Abstract, and some have both.
 
 ### Fonts
 
