@@ -93,6 +93,16 @@
     justify: true,
   )
 
+  // footnotes at the bottom of the page, justified with a hanging indent (Leitfaden, Section 2.4)
+  show footnote.entry: it => {
+    let loc = it.note.location()
+    let number = numbering(it.note.numbering, ..counter(footnote).at(loc))
+    grid(
+      columns: (1.5em, 1fr),
+      link(loc, super(number)), par(justify: true, it.note.body),
+    )
+  }
+
   // pre-text
   if show-restriction-notice {
     restriction-notice(title, company, confidentiality-period)
