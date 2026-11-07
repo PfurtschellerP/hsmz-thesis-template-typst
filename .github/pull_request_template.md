@@ -6,4 +6,7 @@
 
 ## Checklist
 
-- [ ] I have tried to compile the code locally and it works as expected.
+- [ ] I have tried to compile the code locally and it works as expected (`scripts/compile-template.sh`).
+- [ ] I have formatted the Typst files (`typstyle -i --line-width 120 .`).
+- [ ] The PR title and commit messages follow [Conventional Commits](https://www.conventionalcommits.org/) (e.g. `feat: ...`, `fix: ...`), as they appear in the release notes.
+- [ ] I have documented new or changed parameters in `README.md`.
