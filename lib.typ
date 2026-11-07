@@ -6,9 +6,11 @@
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
   ABSTRACT, APPENDIX, BIBLIOGRAPHY, DRAFT, FORMULA, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES,
-  LIST_OF_FORMULAS, LIST_OF_SYMBOLS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, OPEN_TODOS, PAGE, WORD_COUNT,
+  LIST_OF_FORMULAS, LIST_OF_SYMBOLS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, OPEN_TODOS, PAGE, WORDS_GUIDELINE,
+  WORDS_OF_MAX, WORD_COUNT,
 )
 #import "check-attributes.typ": check-attributes
+#import "utils.typ": format-number, word-guideline
 
 // outlined outline for figures, tables, etc. that itself is outlined in the table of contents
 #let outlined-outline(..args) = {
@@ -32,6 +34,16 @@
   let page-numbering = loc.page-numbering()
   if page-numbering == none { str(loc.page()) } else { numbering(page-numbering, ..counter(page).at(loc)) }
 }
+
+// warning in draft mode, e.g. if a text is too long. Typst packages can't emit compiler warnings, so it is shown in the
+// document instead.
+#let draft-warning(body) = block(
+  width: 100%,
+  inset: 8pt,
+  stroke: 1pt + red,
+  radius: 2pt,
+  text(fill: red, size: 10pt, body),
+)
 
 // main entrypoint for this template
 #let hsmz-thesis-unofficial(
@@ -197,16 +209,23 @@
     #emph(it.body)
   ]))
 
-  if show-management-summary {
-    heading(MANAGEMENT_SUMMARY.at(language), outlined: false, level: 1)
-    management-summary
+  // Management Summary (max. 500 words) and Abstract (max. 250 words), Leitfaden, Section 3.5
+  let summary-page(title, content, max-words) = {
+    heading(title, outlined: false, level: 1)
+    content
+    let count = word-count-of(content).words
+    if draft and count > max-words {
+      draft-warning((WORDS_OF_MAX.at(language))(format-number(count, language), format-number(max-words, language)))
+    }
     pagebreak()
   }
 
+  if show-management-summary {
+    summary-page(MANAGEMENT_SUMMARY.at(language), management-summary, 500)
+  }
+
   if show-abstract {
-    heading(ABSTRACT.at(language), outlined: false, level: 1)
-    abstract
-    pagebreak()
+    summary-page(ABSTRACT.at(language), abstract, 250)
   }
 
   // reset heading and page numbers for listings
@@ -314,7 +333,12 @@
   // content can be excluded by attaching the label <no-wc> to it.
   if show-word-count {
     let count = word-count-of(body, exclude: (figure, table, <no-wc>)).words
-    block(above: 2em, [#WORD_COUNT.at(language): #count])
+    let guideline = word-guideline(thesis-type)
+    block(above: 2em, [
+      #WORD_COUNT.at(language): #format-number(count, language)
+      // the guideline for final theses is only shown in draft mode
+      #if draft and guideline != none [(#(WORDS_GUIDELINE.at(language))(format-number(guideline, language))) ]
+    ])
   }
 
   // post-text

@@ -96,6 +96,11 @@ the text with `todo`:
 Die Digitalisierung verändert den Mittelstand. #todo[Quelle ergänzen]
 ```
 
+Draft mode also checks the length of the texts. If the Management Summary has more than 500 words or the Abstract
+more than 250 words, a red note below the text says so. For Bachelor's and Master's theses, the word count at the end
+of the main text is shown together with the guideline of the Leitfaden (10.000 or 12.000 words). These checks only
+appear in draft mode, so that the final version isn't affected if your supervisor allows different lengths.
+
 Todos are highlighted and not included in the word count. When you set `draft: false` for the final version,
 compilation fails as long as todos remain, and the error message lists their pages.
 
