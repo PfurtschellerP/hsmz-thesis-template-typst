@@ -25,7 +25,7 @@
   ),
   company: "Musterfirma",
   supervisor: "Prof. Dr. Muster",
-  font: "Calibri",
+  font: ("Arial", "Liberation Sans", "Arimo"),
   citation-style: "apa",
   print-only-used-acronyms: true,
   show-full-bibliography: false,

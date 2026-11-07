@@ -38,7 +38,7 @@
   company: none,
   supervisor: none,
   // settings
-  font: "Calibri",
+  font: ("Arial", "Liberation Sans", "Arimo"),
   citation-style: "apa",
   print-only-used-acronyms: true,
   show-full-bibliography: false,
