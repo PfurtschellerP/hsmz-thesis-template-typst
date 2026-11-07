@@ -1,5 +1,5 @@
 // Markdown-like checklists
-#import "@preview/cheq:0.3.0": checklist // https://typst.app/universe/package/cheq/
+#import "@preview/cheq:0.3.1": checklist // https://typst.app/universe/package/cheq/
 
 // locale
 #import "locale.typ": DEGREE_PROGRAM, FACULTY_OF, MATRICULATION_NUMBER, SUBMITTED_BY, SUBMITTED_ON, SUBMITTED_TO
