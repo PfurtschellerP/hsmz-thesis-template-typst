@@ -390,7 +390,8 @@
       if todos.len() > 0 {
         let pages = todos.map(it => printed-page-number(it.location())).dedup().join(", ")
         panic(
-          str(todos.len())
+          "hsmz-thesis-unofficial: "
+            + str(todos.len())
             + " open todo(s) on page(s) "
             + pages
             + ". Resolve them, or set draft: true while you are still writing.",
