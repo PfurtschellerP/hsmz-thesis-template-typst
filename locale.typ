@@ -9,6 +9,11 @@
   "en": "List of Tables",
 )
 
+#let LIST_OF_FORMULAS = (
+  "de": "Formelverzeichnis",
+  "en": "List of Formulas",
+)
+
 #let LIST_OF_ABBREVIATIONS = (
   "de": "Abkürzungsverzeichnis",
   "en": "List of Abbreviations",
@@ -75,6 +80,11 @@
 #let WORD_COUNT = (
   "de": "Anzahl der Wörter im Textteil",
   "en": "Word count of the main text",
+)
+
+#let FORMULA = (
+  "de": "Formel",
+  "en": "Equation",
 )
 
 #let NOTE = (

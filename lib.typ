@@ -5,8 +5,8 @@
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
-  ABSTRACT, APPENDIX, BIBLIOGRAPHY, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES,
-  MANAGEMENT_SUMMARY, NOTE, WORD_COUNT,
+  ABSTRACT, APPENDIX, BIBLIOGRAPHY, FORMULA, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES,
+  LIST_OF_FORMULAS, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE, WORD_COUNT,
 )
 #import "check-attributes.typ": check-attributes
 
@@ -110,6 +110,10 @@
     )
   }
 
+  // formulas are numbered on the right and listed in the list of formulas (Leitfaden, Section 2.3). To leave out a
+  // single formula, use `#math.equation(block: true, numbering: none, $ ... $)`.
+  set math.equation(numbering: "(1)", supplement: FORMULA.at(language))
+
   // pre-text
   if show-restriction-notice {
     restriction-notice(title, company, confidentiality-period)
@@ -207,16 +211,33 @@
   init-acronyms(
     acronyms,
   )
-  [
-    #print-index(
-      title: [#LIST_OF_ABBREVIATIONS.at(language)],
-      outlined: true,
-      used-only: print-only-used-acronyms,
-      sorted: "up",
-      row-gutter: 10pt,
+  print-index(
+    title: [#LIST_OF_ABBREVIATIONS.at(language)],
+    outlined: true,
+    used-only: print-only-used-acronyms,
+    sorted: "up",
+    row-gutter: 10pt,
+  )
+
+  // the list of formulas is only required if formulas are used (Leitfaden, Section 2.3); it lists every numbered
+  // formula with its number, the formula itself and the page
+  context if query(math.equation.where(block: true)).any(it => it.numbering != none) {
+    pagebreak()
+    show outline.entry: it => {
+      let formula = it.element
+      if formula.numbering == none { return none }
+      let number = numbering(formula.numbering, ..counter(math.equation).at(formula.location()))
+      link(formula.location(), it.indented(number, [
+        #math.equation(block: false, formula.body) #box(width: 1fr, it.fill) #it.page()
+      ]))
+    }
+    outlined-outline(
+      title: [#LIST_OF_FORMULAS.at(language)],
+      target: math.equation.where(block: true),
     )
-    #text("") <list-of-abbreviations> // set label for page number retrieval later
-  ]
+  }
+
+  [#metadata(none) <hsmz-end-of-listings>] // last page of the listings, see below
 
   pagebreak()
 
@@ -252,7 +273,7 @@
     numbering: "I",
   )
   // retrieve last page before the content started from labels using context
-  context counter(page).update(counter(page).at(<list-of-abbreviations>).first() + 1)
+  context counter(page).update(counter(page).at(<hsmz-end-of-listings>).first() + 1)
 
   set std.bibliography(
     title: BIBLIOGRAPHY.at(language),

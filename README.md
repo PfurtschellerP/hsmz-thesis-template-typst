@@ -37,8 +37,8 @@ The template creates the components of the thesis in the order required by the g
 2. Title page
 3. Eigenständigkeitserklärung (declaration of originality) with the three AI options
 4. Management Summary and/or Abstract (without page numbers)
-5. Table of contents, list of figures, list of tables and list of abbreviations (Roman page numbers; the lists of
-   figures and tables only if the thesis contains figures or tables)
+5. Table of contents, list of figures, list of tables, list of abbreviations and list of formulas (Roman page
+   numbers; the lists of figures, tables and formulas only if the thesis contains any)
 6. Main text (Arabic page numbers starting at 1), followed by the word count of the main text
 7. Bibliography, list of appendices and appendix (Roman page numbers, continued)
 
@@ -110,6 +110,17 @@ source (or "Eigene Darstellung"):
     + figure-note[Eigene Darstellung, basierend auf Statistisches Bundesamt (2021, S. 73).],
   caption: [Erwerbstätigenquote 60–64-Jähriger],
 ) <tab:quote>
+```
+
+### Formulas
+
+Formulas in their own paragraph (`$ ... $` with spaces) are numbered on the right and listed in the list of formulas,
+which only appears if the thesis contains numbered formulas. Reference them with a label, e.g. `@eq:pythagoras`
+(output: "Formel 1"). To leave out a single formula, write
+`#math.equation(block: true, numbering: none, $ ... $)`.
+
+```typ
+$ a^2 + b^2 = c^2 $ <eq:pythagoras>
 ```
 
 ### Word count
