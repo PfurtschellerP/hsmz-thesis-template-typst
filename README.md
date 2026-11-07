@@ -14,7 +14,7 @@ of the Fachbereich Wirtschaft.
 Initialize a new thesis with `typst init`:
 
 ```bash
-typst init @preview/hsmz-thesis-unofficial:0.3.0
+typst init @preview/hsmz-thesis-unofficial:0.4.0
 ```
 
 or select the template in the [Typst web app](https://typst.app/universe/package/hsmz-thesis-unofficial). This
@@ -125,7 +125,7 @@ This project is open for collaboration. If you have suggestions, improvements, o
 free to open an issue or submit a pull request on [GitHub](https://github.com/PfurtschellerP/hsmz-thesis-template-typst).
 Changes are listed on the [releases page](https://github.com/PfurtschellerP/hsmz-thesis-template-typst/releases), and
 the release process is described in
-[RELEASING.md](https://github.com/PfurtschellerP/hsmz-thesis-template-typst/blob/v0.3.0/RELEASING.md).
+[RELEASING.md](https://github.com/PfurtschellerP/hsmz-thesis-template-typst/blob/v0.4.0/RELEASING.md).
 
 ## Other Projects
 
