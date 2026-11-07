@@ -1,4 +1,3 @@
-
 // listings
 #let LIST_OF_FIGURES = (
   "de": "Abbildungsverzeichnis",
@@ -13,6 +12,21 @@
 #let LIST_OF_ABBREVIATIONS = (
   "de": "Abkürzungsverzeichnis",
   "en": "List of Abbreviations",
+)
+
+#let LIST_OF_APPENDICES = (
+  "de": "Anhangsverzeichnis",
+  "en": "List of Appendices",
+)
+
+#let BIBLIOGRAPHY = (
+  "de": "Literaturverzeichnis",
+  "en": "References",
+)
+
+#let APPENDIX = (
+  "de": "Anhang",
+  "en": "Appendix",
 )
 
 // title page
@@ -46,13 +60,9 @@
   "en": "Submitted on",
 )
 
-#let LIST_OF_APPENDICES = (
-  "de": "Anhangverzeichnis",
-  "en": "List of Appendices",
-)
-
+// summaries
 #let ABSTRACT = (
-  "de": "Zusammenfassung",
+  "de": "Abstract",
   "en": "Abstract",
 )
 
