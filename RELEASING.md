@@ -100,8 +100,11 @@ Pushing the tag starts [`release.yml`](.github/workflows/release.yml). It
 
 1. checks that the tag matches `typst.toml`, `template/main.typ` and `README.md`,
 2. compiles the sample thesis,
-3. assembles the package with [`scripts/package.sh`](scripts/package.sh) (all files tracked by git, except for CI,
-   scripts and release docs, which don't belong into typst/packages),
+3. assembles the package with [`scripts/package.sh`](scripts/package.sh). Only the files that users need are copied:
+   `typst.toml`, `README.md`, `LICENSE`, `thumbnail.png`, the logo, the `.typ` files of the library and the
+   `template/` folder. `.github/`, `.vscode/`, `scripts/`, `.gitignore` and `RELEASING.md` are never submitted. Both
+   lists are defined in [`scripts/common.sh`](scripts/common.sh); if you add a file that matches neither, packaging
+   (and therefore CI) fails until you add it to one of them,
 4. creates the GitHub release with automatically generated release notes (see [Release notes](#release-notes)) and
    attaches `sample-thesis-X.Y.Z.pdf` and `hsmz-thesis-unofficial-X.Y.Z.zip`.
 
