@@ -1,0 +1,146 @@
+name: Release
+
+# Triggered by pushing a version tag, e.g. `git tag v0.4.0 && git push origin v0.4.0`.
+# See RELEASING.md for the complete release process.
+
+on:
+  push:
+    tags: ["v[0-9]+.[0-9]+.[0-9]+"]
+
+permissions:
+  contents: read
+
+jobs:
+  github-release:
+    name: Create GitHub release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      name: ${{ steps.meta.outputs.name }}
+      version: ${{ steps.meta.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Read package metadata
+        id: meta
+        run: |
+          echo "name=$(sed -n 's/^name = "\(.*\)"/\1/p' typst.toml)" >> "$GITHUB_OUTPUT"
+          echo "version=$(sed -n 's/^version = "\(.*\)"/\1/p' typst.toml)" >> "$GITHUB_OUTPUT"
+
+      - name: Check that the tag matches all version references
+        run: scripts/check-version.sh "$GITHUB_REF_NAME"
+
+      - name: Setup Typst
+        uses: typst-community/setup-typst@v5
+
+      - name: Compile sample thesis
+        run: scripts/compile-template.sh "sample-thesis-${{ steps.meta.outputs.version }}.pdf"
+
+      - name: Assemble package
+        run: |
+          scripts/package.sh dist
+          (cd dist && zip -qr "../${{ steps.meta.outputs.name }}-${{ steps.meta.outputs.version }}.zip" .)
+
+      # usage hint, prepended to the notes that GitHub generates from the changes since the previous release
+      - name: Write release notes header
+        run: |
+          {
+            echo "**Usage:** \`typst init @preview/${{ steps.meta.outputs.name }}:${{ steps.meta.outputs.version }}\`"
+            echo "(available once the version has been published on [Typst Universe](https://typst.app/universe/package/${{ steps.meta.outputs.name }}))."
+          } > release-notes.md
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --verify-tag \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes \
+            --notes-file release-notes.md \
+            "sample-thesis-${{ steps.meta.outputs.version }}.pdf" \
+            "${{ steps.meta.outputs.name }}-${{ steps.meta.outputs.version }}.zip"
+
+  # Opens the submission pull request on typst/packages from your fork. Only runs if the secret
+  # TYPST_PACKAGES_TOKEN is configured (see RELEASING.md). Uses the "typst-universe" environment, so you can require a
+  # manual approval before anything is submitted (Settings → Environments → typst-universe → Required reviewers).
+  typst-universe:
+    name: Open PR on typst/packages
+    needs: github-release
+    runs-on: ubuntu-latest
+    environment: typst-universe
+    env:
+      GH_TOKEN: ${{ secrets.TYPST_PACKAGES_TOKEN }}
+      NAME: ${{ needs.github-release.outputs.name }}
+      VERSION: ${{ needs.github-release.outputs.version }}
+      # your fork of typst/packages; override with the repository variable TYPST_PACKAGES_FORK
+      FORK: ${{ vars.TYPST_PACKAGES_FORK || format('{0}/packages', github.repository_owner) }}
+    steps:
+      - name: Check for token
+        id: token
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::notice::TYPST_PACKAGES_TOKEN is not set, skipping the automatic submission. Submit the package manually as described in RELEASING.md."
+            echo "available=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout
+        if: steps.token.outputs.available == 'true'
+        uses: actions/checkout@v7
+
+      - name: Assemble package
+        if: steps.token.outputs.available == 'true'
+        run: scripts/package.sh "$RUNNER_TEMP/dist"
+
+      - name: Push package to fork and open pull request
+        if: steps.token.outputs.available == 'true'
+        run: |
+          set -euo pipefail
+          branch="$NAME-$VERSION"
+          fork_owner="${FORK%%/*}"
+
+          if gh pr list -R typst/packages --head "$branch" --state open --json url -q '.[].url' | grep -q .; then
+            echo "::notice::A pull request for $NAME:$VERSION is already open on typst/packages."
+            exit 0
+          fi
+
+          # bring the fork's main branch up to date with typst/packages
+          gh repo sync "$FORK" --source typst/packages --branch main
+
+          # sparse checkout, see https://github.com/typst/packages/blob/main/docs/tips.md
+          git clone --depth 1 --no-checkout --filter=tree:0 \
+            "https://x-access-token:${GH_TOKEN}@github.com/${FORK}.git" "$RUNNER_TEMP/packages"
+          cd "$RUNNER_TEMP/packages"
+          git sparse-checkout set "packages/preview/$NAME"
+          git checkout main
+          git switch -c "$branch"
+
+          if [ -e "packages/preview/$NAME/$VERSION" ]; then
+            echo "::error::packages/preview/$NAME/$VERSION already exists in typst/packages. Published versions cannot be changed, bump the version instead."
+            exit 1
+          fi
+          mkdir -p "packages/preview/$NAME"
+          cp -r "$RUNNER_TEMP/dist/$NAME/$VERSION" "packages/preview/$NAME/$VERSION"
+
+          # commit as the owner of the token, who must be the author of the previous submissions
+          login="$(gh api user -q .login)"
+          id="$(gh api user -q .id)"
+          git config user.name "$(gh api user -q '.name // .login')"
+          git config user.email "${id}+${login}@users.noreply.github.com"
+          git add "packages/preview/$NAME/$VERSION"
+          git commit -m "$NAME:$VERSION"
+          git push --force origin "$branch"
+
+          notes="$(gh release view "v$VERSION" -R "$GITHUB_REPOSITORY" --json body -q .body)"
+          body="$(printf 'I am submitting\n- [ ] a new package\n- [x] an update for a package\n\nDescription: %s\n\nRelease: %s\n' \
+            "$notes" "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v$VERSION")"
+
+          gh pr create -R typst/packages \
+            --base main \
+            --head "$fork_owner:$branch" \
+            --title "$NAME:$VERSION" \
+            --body "$body"
