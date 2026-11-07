@@ -25,3 +25,9 @@ rm -f "$REPO_ROOT/typst.toml.bak" "$REPO_ROOT/template/main.typ.bak" "$REPO_ROOT
 
 echo "Bumped $PACKAGE_NAME from $old to $new"
 "$REPO_ROOT/scripts/check-version.sh" "$new"
+
+# move the local package link (scripts/link-local-package.sh) to the new version, if this checkout is linked
+link="$(local_data_package_dir)/$old"
+if [[ -L "$link" && "$(readlink "$link")" == "$REPO_ROOT" ]]; then
+  "$REPO_ROOT/scripts/link-local-package.sh"
+fi
