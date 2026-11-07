@@ -114,6 +114,8 @@
   set document(
     title: title,
     author: author.name,
+    // PDF metadata: the submission date if it is given as a date, otherwise the time of compilation
+    date: if type(submission-date) == datetime { submission-date } else { auto },
   )
   set page(
     paper: "a4",

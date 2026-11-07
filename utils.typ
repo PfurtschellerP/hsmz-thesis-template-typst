@@ -27,3 +27,12 @@
   let level = final-thesis-level(thesis-type)
   if level != none { (bachelor: 10000, master: 12000).at(level) }
 }
+
+// format a date: a datetime is formatted for the language (31.03.2026 or 31 March 2026), anything else (e.g. a
+// string) is shown as it is
+#let format-date(date, language) = {
+  if type(date) != datetime { return date }
+  if language == "de" { date.display("[day].[month].[year]") } else {
+    date.display("[day padding:none] [month repr:long] [year]")
+  }
+}

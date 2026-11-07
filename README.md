@@ -59,7 +59,7 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 | `title` | Title of the thesis | required |
 | `faculty` | Fachbereich, e.g. `"Wirtschaft"` | required |
 | `degree-program` | Degree program including the degree, e.g. `"Betriebswirtschaftslehre B. Sc."` | required |
-| `submission-date` | Submission date, e.g. `"01.12.2025"` | required |
+| `submission-date` | Submission date, preferably as a date: `datetime(year: 2025, month: 12, day: 1)` (printed as "01.12.2025", or "1 December 2025" in English). A string is printed as it is. | required |
 | `supervisor` | Supervisor including the academic degree, e.g. `"Prof. Dr. Norma Neugier"` | required |
 | `author` | Dictionary with `name`, `matriculation-number`, `address: (street, zip, city)` and optionally `signature-image` (scanned signature; without it, space for a handwritten signature is left) | required |
 | `language` | `"de"` or `"en"` | required |
@@ -68,7 +68,7 @@ All parameters are passed to `hsmz-thesis-unofficial.with(...)` in `main.typ`:
 | `symbols` | List of `(symbol, description)` pairs for the list of symbols, e.g. `(($alpha$, [Signifikanzniveau]),)`; the list is only shown if it isn't empty | `()` |
 | `bibliography` | `bibliography("literature.bib")` | required |
 | `company` | Company or institution for the restriction notice | required if `show-restriction-notice` is `true` |
-| `confidentiality-period` | End of the confidentiality period for the restriction notice, e.g. `"01.01.2030"` | required if `show-restriction-notice` is `true` |
+| `confidentiality-period` | End of the confidentiality period for the restriction notice, as a date or string like `submission-date` | required if `show-restriction-notice` is `true` |
 | `appendix` | Content of the appendix, or `none` | `none` |
 | `abstract` | Content of the Abstract (max. 250 words) | `[]` |
 | `management-summary` | Content of the Management Summary (max. 500 words) | `[]` |

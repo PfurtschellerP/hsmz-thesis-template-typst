@@ -2,6 +2,7 @@
 #import "@preview/cheq:0.3.1": checklist // https://typst.app/universe/package/cheq/
 
 // locale
+#import "utils.typ": format-date
 #import "locale.typ": DEGREE_PROGRAM, FACULTY_OF, MATRICULATION_NUMBER, SUBMITTED_BY, SUBMITTED_ON, SUBMITTED_TO
 
 // Sperrvermerk – text according to the "Leitfaden zur Anfertigung wissenschaftlicher Arbeiten" (April 2025), Section 3.1
@@ -25,7 +26,7 @@
     Im Übrigen ist eine Veröffentlichung und Vervielfältigungen der Abschlussarbeit – auch in Auszügen – nicht
     gestattet. Vorbehaltlich der Vorschriften zum Prüfungsverfahren und der Prüfung bedarf eine Einsichtnahme in die
     Arbeit durch Dritte einer ausdrücklichen Genehmigung der Verfasserin/des Verfassers sowie des o.a. Unternehmens/der
-    o.a. Einrichtung. Diese Geheimhaltungsverpflichtung gilt bis zum Ablauf des #confidentiality-period.
+    o.a. Einrichtung. Diese Geheimhaltungsverpflichtung gilt bis zum Ablauf des #format-date(confidentiality-period, "de").
     #pagebreak()
   ]
 }
@@ -87,7 +88,7 @@
             ],
 
             [#SUBMITTED_TO.at(language):], supervisor,
-            [#SUBMITTED_ON.at(language):], submission-date,
+            [#SUBMITTED_ON.at(language):], format-date(submission-date, language),
           )],
         size: 11pt,
       )
@@ -161,7 +162,7 @@
       columns: (1fr, 1fr),
       stroke: none,
       table.cell(
-        underline([#author.address.city, #submission-date]),
+        underline([#author.address.city, #format-date(submission-date, "de")]),
         align: bottom,
       ),
       table.cell(
