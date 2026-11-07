@@ -50,13 +50,13 @@
   // thesis data
   thesis-type: none,
   title: none,
-  faculty: none,
+  faculty: "Wirtschaft",
   degree-program: none,
   submission-date: none,
   confidentiality-period: none,
   ai-declaration-option: none,
-  language: none,
-  acronyms: none,
+  language: "de",
+  acronyms: (:),
   symbols: (),
   bibliography: none,
   appendix: none,
@@ -252,41 +252,44 @@
     fill: (_, y) => if y == 0 { rgb("#e7e6e6") },
   )
 
-  // listings
+  // listings, each on a new page. The weak page breaks don't create empty pages for lists that are left out.
   outline()
-  pagebreak()
 
   // the lists of figures and tables are only required if figures or tables are used (Leitfaden, Section 2.3)
   context if query(figure.where(kind: image)).len() > 0 {
+    pagebreak(weak: true)
     outlined-outline(
       title: [#LIST_OF_FIGURES.at(language)],
       target: figure.where(kind: image),
     )
-    pagebreak()
   }
 
   context if query(figure.where(kind: table)).len() > 0 {
+    pagebreak(weak: true)
     outlined-outline(
       title: [#LIST_OF_TABLES.at(language)],
       target: figure.where(kind: table),
     )
-    pagebreak()
   }
 
+  // the list of abbreviations is only required if abbreviations are used (Leitfaden, Section 2.3)
   init-acronyms(
     acronyms,
   )
-  print-index(
-    title: [#LIST_OF_ABBREVIATIONS.at(language)],
-    outlined: true,
-    used-only: print-only-used-acronyms,
-    sorted: "up",
-    row-gutter: 10pt,
-  )
+  if acronyms.len() > 0 {
+    pagebreak(weak: true)
+    print-index(
+      title: [#LIST_OF_ABBREVIATIONS.at(language)],
+      outlined: true,
+      used-only: print-only-used-acronyms,
+      sorted: "up",
+      row-gutter: 10pt,
+    )
+  }
 
   // the list of symbols is only required if symbols are used (Leitfaden, Section 2.3)
   if symbols.len() > 0 {
-    pagebreak()
+    pagebreak(weak: true)
     heading(LIST_OF_SYMBOLS.at(language), level: 1, outlined: true)
     // same layout as the list of abbreviations (acrostiche: first column 20% of the width)
     grid(
@@ -299,7 +302,7 @@
   // the list of formulas is only required if formulas are used (Leitfaden, Section 2.3); it lists every numbered
   // formula with its number, the formula itself and the page
   context if query(math.equation.where(block: true)).any(it => it.numbering != none) {
-    pagebreak()
+    pagebreak(weak: true)
     show outline.entry: it => {
       let formula = it.element
       if formula.numbering == none { return none }
