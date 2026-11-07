@@ -4,7 +4,8 @@
 // static pages, locale and helper functions
 #import "static-pages.typ": declaration-of-originality, restriction-notice, title-page
 #import "locale.typ": (
-  ABSTRACT, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES, MANAGEMENT_SUMMARY, NOTE,
+  ABSTRACT, APPENDIX, BIBLIOGRAPHY, LIST_OF_ABBREVIATIONS, LIST_OF_APPENDICES, LIST_OF_FIGURES, LIST_OF_TABLES,
+  MANAGEMENT_SUMMARY, NOTE,
 )
 #import "check-attributes.typ": check-attributes
 
@@ -19,9 +20,6 @@
 #let figure-note(body) = context block(width: 100%, above: 0.65em, align(left, text(size: 0.9em)[
   #emph(NOTE.at(text.lang, default: NOTE.en)). #body
 ]))
-
-// workaround for the lack of a std scope so that we can pass a bibliography object around from the template to here
-#let std-bibliography = bibliography
 
 // main entrypoint for this template
 #let hsmz-thesis-unofficial(
@@ -234,21 +232,20 @@
 
   // post-text
 
-  // update counters and switch back to character numbering
+  // switch back to roman numbering, continuing after the listings
   set heading(
     numbering: none,
   )
 
+  // (changing the page settings starts a new page)
   set page(
     numbering: "I",
   )
   // retrieve last page before the content started from labels using context
-  context [
-    #counter(page).update(counter(page).at(<list-of-abbreviations>).first() + 1)
-    #counter(heading).update(counter(heading).at(<list-of-abbreviations>).first() + 1)
-  ]
+  context counter(page).update(counter(page).at(<list-of-abbreviations>).first() + 1)
 
-  set std-bibliography(
+  set std.bibliography(
+    title: BIBLIOGRAPHY.at(language),
     style: citation-style,
     full: show-full-bibliography,
   )
@@ -258,14 +255,16 @@
   if appendix != none {
     pagebreak()
 
+    let appendix-supplement = [#APPENDIX.at(language)]
+
     outlined-outline(
       title: [#LIST_OF_APPENDICES.at(language)],
-      target: heading.where(supplement: [Appendix]),
+      target: heading.where(supplement: appendix-supplement),
     )
 
     pagebreak()
 
-    set heading(numbering: "A", supplement: [Appendix])
+    set heading(numbering: "A.1", supplement: appendix-supplement)
     counter(heading).update(0)
 
     appendix
