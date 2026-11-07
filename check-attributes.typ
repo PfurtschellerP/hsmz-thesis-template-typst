@@ -1,5 +1,4 @@
-// helper: true if a value is missing (none or an empty string)
-#let is-missing(value) = value == none or value == ""
+#import "utils.typ": final-thesis-level, is-missing
 
 #let check-attributes(
   thesis-type: none,
@@ -144,6 +143,15 @@
 
   if type(show-word-count) != bool {
     panic("show-word-count must be a boolean value")
+  }
+
+  // final theses need a Management Summary or an Abstract, or both (Leitfaden, Section 2.3)
+  if final-thesis-level(thesis-type) != none and not show-management-summary and not show-abstract {
+    panic(
+      "A "
+        + thesis-type
+        + " needs a Management Summary or an Abstract (or both). Set show-abstract: true or show-management-summary: true.",
+    )
   }
 
   // company and confidentiality period are only needed for the restriction notice
