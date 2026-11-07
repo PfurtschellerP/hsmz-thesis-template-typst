@@ -164,7 +164,9 @@
       table.cell(
         [
           #set image(height: 1.5cm)
-          #author.signature-image
+          // leave room for a handwritten signature if no scanned signature is provided
+          #author.at("signature-image", default: none)
+          #if author.at("signature-image", default: none) == none { v(1.5cm) }
         ],
         align: bottom,
       ),
