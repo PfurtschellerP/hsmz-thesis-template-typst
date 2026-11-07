@@ -51,6 +51,12 @@
     panic("Submission date is missing")
   }
 
+  for (name, date) in (("submission-date", submission-date), ("confidentiality-period", confidentiality-period)) {
+    if date != none and type(date) not in (str, content, datetime) {
+      panic(name + " must be a date, e.g. datetime(year: 2026, month: 3, day: 31), or a string")
+    }
+  }
+
   // check ai declaration option
   if ai-declaration-option not in (1, 2, 3) {
     panic("AI declaration option is missing or out of bounds. Please provide 1, 2 or 3.")
